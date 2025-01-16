@@ -9,7 +9,7 @@ public class Ball
   double DT = 0.06;	// time increment
   double MASS = 1.0;
   double g_acc = +9.8;	// gravity constant
-
+  color ballColor = color(255,0,0);
   double times;		// time since start
   double sx, sy;		// actual position 
   double vx, vy;		// actual velocity 
@@ -33,7 +33,6 @@ public class Ball
     this.sy=+50;      
     this.vx=random(50);  
     this.sx=100;      
-
     this.kick = minim.loadFile("kick.wav");
     this.snare = minim.loadFile("hat.wav");
   }
@@ -42,9 +41,9 @@ public class Ball
   {
     if (times>=0) {
       pushMatrix();
-      fill(c_red);
+      fill(ballColor);
       noStroke();
-      specular(c_red);
+      specular(ballColor);
       shininess(5.0);
 
       translate(Sx(), Sy(), 0 );

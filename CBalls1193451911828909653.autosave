@@ -46,20 +46,16 @@ public class CBalls {
 
         if (distance < b1.Radius() + b2.Radius()) {
 
+          // Simple elastic collision response
+          float overlap =0.5f * ((b1.Radius() + b2.Radius() - distance ));
 
-          float overlap = 0.5f * (distance - b1.Radius() - b2.Radius());
-
-          // Einheitsvektor, zeigt die Richtung des Vektors an
-          float nx = dx / distance;
-          float ny = dy / distance;
-
-
+          // Adjust positions to separate balls
           if (overlap >0){
-            println("Overlap detected", overlap);
-          b1.sx -= overlap * (b1.sx - b2.sx) / distance;
-          b1.sy -= overlap * (b1.sy - b2.sy) / distance;
-          b2.sx += overlap * (b1.sx - b2.sx) / distance;
-          b2.sy += overlap * (b1.sy - b2.sy) / distance;
+            println("Overlap detected", overlap); // Prints "Overlap detected" with a newline
+b1.sx -= overlap * dx / distance;
+    b1.sy -= overlap * dy / distance;
+    b2.sx += overlap * dx / distance;
+    b2.sy += overlap * dy / distance;
           }
 
     //           double overlap = (ball1.radius + ball2.radius) - distance;
@@ -73,7 +69,9 @@ public class CBalls {
     // }
   
 
-
+          // Einheitsvektor, zeigt die Richtung des Vektors an
+          float nx = dx / distance;
+          float ny = dy / distance;
 
           // Relative Geschwindigkeit
           float dvx = (float)(b1.vx - b2.vx);
