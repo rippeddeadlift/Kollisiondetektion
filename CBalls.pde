@@ -5,14 +5,17 @@
 public class CBalls {
   boolean impulsMasse = false;
   boolean mousedown   = false;
+  Quadtree qtree;
 
   Ball[] ball;
 
   CBalls(int totalball) {
-
+    qtree = new Quadtree(width / 2, height / 2, width / 2, height / 2, 4);
     ball = new Ball[totalball];
-    for (int bn=0; bn < ball.length; bn++) 
-      ball[bn] = new Ball(bn);
+    for (int bn=0; bn < ball.length; bn++) {
+       ball[bn] = new Ball(bn);
+       qtree.insert(ball[bn]);
+    }
   }
 
   void restart() {
@@ -41,6 +44,7 @@ public class CBalls {
 
   void draw() 
   {
+    qtree.show();
     // draw the balls
     for (int bn=0; bn < ball.length; bn++) 
       ball[bn].draw();
@@ -55,7 +59,9 @@ void game_physics() {
 
   void detectCollisions() {
     //log(n^2) Algorithmus (BF)
-    bruteforce();
+    //bruteforce();
+    //log(nlog(n) Algorithmus (QuadTree))
+    quadTreeDetection();
   }
 
  
@@ -102,6 +108,27 @@ boolean isMouseOverBall(Ball b, float mx, float my) {
             collisionanswer(distance, b1, b2, dx, dy);
           }
         }
+    }
+  }
+  
+  void quadTreeDetection(){
+    for(int i = 0; i < ball.length; i++){
+      Ball b1 = ball[i];
+      b1.ballColor = color(0,0,255);
+      ArrayList<Ball> otherBalls = qtree.query(new PVector(ball[i].Sx(), ball[i].Sy()), ball[i].Radius() * 2, ball[i].Radius() * 2);
+      for(Ball b : otherBalls){
+        b.ballColor = color(255,0,0);
+      }
+      for(int j = 0; j < otherBalls.size(); j++){
+        Ball b2 = otherBalls.get(j);
+        b2.ballColor = color(0,255,0);
+        float dx = (b1.Sx() - b2.Sx());
+        float dy = (b1.Sy() - b2.Sy());
+        float distance =  dist(ball[i].Sx(), ball[i].Sy(), otherBalls.get(j).Sx(), otherBalls.get(j).Sy());
+        if(b1 != b2 && distance < (ball[i].Radius() + otherBalls.get(j).Radius())){
+          collisionanswer(distance, ball[i], otherBalls.get(j), dx, dy);
+        }
+      }
     }
   }
   
