@@ -88,12 +88,6 @@ void startDrawingBallsAndPhysics() {
   if(currentMode == Mode.TUNNELING){
     tunnelingDemo.draw();
   }
-  if(drawVector){
-    vd.draw(theBalls);
-  }
-  if(currentMode == Mode.TUNNELING){
-    tunnelingDemo.draw();
-  }
 }
 
 
