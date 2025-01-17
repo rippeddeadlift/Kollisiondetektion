@@ -7,7 +7,7 @@ import ddf.minim.*;    // AudioPlayer, Minim
 CBalls theBalls;
 VectorDrawer vd;
 int totalball = 10;               // number of balls 
-PFont helpFont;      
+PFont mono;
 boolean showHelp=false;          // toggle help text
 boolean forceFreeze = false;     // toggle game physics 
 boolean frictionMode=false;      // may be used in class Ball
@@ -38,21 +38,17 @@ void setup()
   size(700, 700, P3D);            
   theBalls = new CBalls(totalball);
   vd = new VectorDrawer();
-  size(700, 700, P3D);            
-  theBalls = new CBalls(totalball);
-  vd = new VectorDrawer();
-  helpFont = createFont("Arial", 22, true);
+  mono = createFont("Cascadia Code", 22); 
   rightwall_x = width;
   floor_y     = height;
   mid_x = width/2.0;
-
 }
+
 void draw() 
 {
     background(80);  // gray background 
-  if (showModes) {
-    PFont mono;
-    mono = createFont("Cascadia Code", 22);
+  if (showModes) {   
+    
     textFont(mono);
     fill(255,255,255);
     text("1: Root Mode / Normalmode ",100,35);
@@ -62,10 +58,9 @@ void draw()
      if(impulsMasse){
     text("Ball Linksclick: Radius + 5%, Masse + 10% ",100,35+25*25);
     text("Ball Rechtsclick: Radius - 5%, Masse - 10% ",100,35+26*25);
-
     }
-
   }
+
     if (noCollision) {
       startDrawingBallsAndPhysics();
   } else if (collision) {
