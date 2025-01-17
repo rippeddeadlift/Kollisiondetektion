@@ -8,12 +8,11 @@ public class CBalls {
 
   Ball[] ball;
 
-  CBalls(PApplet pApp, int totalball) {
-    minim = new Minim(pApp);
+  CBalls(int totalball) {
 
     ball = new Ball[totalball];
     for (int bn=0; bn < ball.length; bn++) 
-      ball[bn] = new Ball(minim, bn);
+      ball[bn] = new Ball(bn);
   }
 
   //if mode == Mass
@@ -54,16 +53,10 @@ public class CBalls {
 
 
         if (distance < b1.Radius() + b2.Radius()) {
-
-
-
           float overlap = 0.5f * (distance - b1.Radius() - b2.Radius());
-
           // Einheitsvektor, zeigt die Richtung des Vektors an
           float nx = dx / distance;
           float ny = dy / distance;
-
-
           if (overlap >0){
             println("Overlap detected", overlap);
           b1.sx -= overlap * (b1.sx - b2.sx) / distance;
@@ -81,10 +74,7 @@ public class CBalls {
     //     ball2.sx += nx * correctionFactor;
     //     ball2.sy += ny * correctionFactor;
     // }
-  
-
-
-
+ 
           // Relative Geschwindigkeit
           float dvx = (float)(b1.vx - b2.vx);
           float dvy = (float)(b1.vy - b2.vy);
@@ -114,18 +104,7 @@ public class CBalls {
     }
   }
 
-  void stop()
-  {
-    // make sure to close all AudioPlayer objects
-    for (int bn=0; bn < ball.length; bn++) { 
-      ball[bn].kick.close(); 
-      ball[bn].snare.close();
-    }  
-
-    minim.stop();
-  }
-
-
+ 
   /* Clicked mouse */
   void Mouse() {
     if (impulsMasse){

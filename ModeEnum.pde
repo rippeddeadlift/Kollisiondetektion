@@ -1,0 +1,6 @@
+public enum Mode{
+  NOCOLLISION,
+  COLLISION,
+  IMPULSE,
+  TUNNELING
+}

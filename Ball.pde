@@ -15,15 +15,11 @@ public class Ball
   double vx, vy;		// actual velocity 
   double ax, ay;		// acceleration, currently constant = (0,+9.8)
   double radius;
-  int bn;                 // ball number
-  AudioPlayer kick;       // one audio-object for each ball --> ensure a multi-kick when 
-  AudioPlayer snare;      // two or more balls hit the floor nearly at the same time 
-  // (otherwise the first playing audio snippet would hinder the
-  // 2nd or 3rd snippet to be played)
+  int bn;           
 
   boolean mousedown   = false;
 
-  Ball (Minim minim, int count) {
+  Ball (int count) {
     this.radius=0.4f*60;
     this.bn=count;
     // we initialize with increasingly more negative 'times' 
@@ -32,9 +28,7 @@ public class Ball
     this.vy=random(50);  
     this.sy=+50;      
     this.vx=random(50);  
-    this.sx=100;      
-    this.kick = minim.loadFile("kick.wav");
-    this.snare = minim.loadFile("hat.wav");
+    this.sx=100;
   }
 
   void draw() 
@@ -51,7 +45,6 @@ public class Ball
       popMatrix();
     }
 
-    audioRewind();
   } 
 
   void game_physics()
@@ -106,30 +99,17 @@ public class Ball
       // the random-floor action:
       this.vy = -random(150)-50;
       this.vx += random(150)-75;
-      //
-      // TODO: distinguish, depending on variable randomFloor,
-      // whether to do random-floor reflection or deterministic reflection
-      //
-
-      this.kick.play();
-      //println("floor");
     } else if (this.sy + dy < ceiling_y + this.radius) {  
       dy = ceiling_y + this.radius - this.sy;
       this.vy = - refl*this.vy;
-      this.snare.play();
-      //println("ceiling");
     }
 
     if (this.sx + dx > rightwall_x - this.radius) {		
       dx = rightwall_x - this.radius - this.sx;
       this.vx = - refl*this.vx;
-      this.snare.play();
-      //println("right");
     } else if (this.sx + dx < leftwall_x + this.radius) {		
       dx = leftwall_x + this.radius - this.sx;
       this.vx = - refl*this.vx;
-      this.snare.play();
-      //println("left");
     }
 
     this.sx += dx;
@@ -148,20 +128,6 @@ public class Ball
     if (this.sx > rightwall_x - this.radius)  this.sx = rightwall_x - this.radius;
     if (this.sy > floor_y     - this.radius)  this.sy = floor_y     - this.radius;
   }
-
-  /* 
-   * ensure that audio snippets are again at starting positions after they have been played
-   */
-  void audioRewind() {
-    if (!kick.isPlaying()) {
-      kick.rewind();
-      kick.pause();
-    }
-    if (!snare.isPlaying()) {
-      snare.rewind();
-      snare.pause();
-    }
-  } 
 
   /* Clicked mouse */
   void Mouse ()
