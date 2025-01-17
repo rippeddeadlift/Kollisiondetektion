@@ -12,6 +12,7 @@ boolean forceFreeze = false;     // toggle game physics
 boolean frictionMode=false;      // may be used in class Ball
 boolean randomFloor = true;      // may be used in class Ball
 boolean showModes = true;
+boolean isRestarting = false;
 
 //modes
 boolean noCollision = true;
@@ -61,6 +62,12 @@ void draw()
     text("2: Kollisiondetektion",100,35+1*25);
     text("3: Impuls / Masse",100,35+2*25);
     text("4: bla",100,35+3*25);
+     if(impulsMasse){
+    text("Ball Linksclick: Radius + 5%, Masse + 10% ",100,35+25*25);
+    text("Ball Rechtsclick: Radius - 5%, Masse - 10% ",100,35+26*25);
+
+    }
+
   }
     if (noCollision) {
       startDrawingBallsAndPhysics();
@@ -70,6 +77,7 @@ void draw()
         if (!forceFreeze)  
           theBalls.detectCollisions();
   } else if (impulsMasse) {
+
         startDrawingBallsAndPhysics();
         if (!forceFreeze)  
           theBalls.detectCollisions();
@@ -151,11 +159,15 @@ void keyPressed()
 }
 
 void restart() {
-  theBalls = new CBalls(this,totalball);
+theBalls.restart();
 }
 
 
-    void activateMode(String mode) {
+void activateMode(String mode) {
+ if (isRestarting) {
+    return; 
+  }
+isRestarting = true; 
       restart();
   noCollision = false;
   collision = false;
@@ -169,6 +181,7 @@ void restart() {
   } else if (mode.equals("impulsMasse")) {
     impulsMasse = true;
   }
+  isRestarting = false;
 }
 void mousePressed(){
   theBalls.Mouse();

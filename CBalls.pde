@@ -16,6 +16,21 @@ public class CBalls {
       ball[bn] = new Ball(minim, bn);
   }
 
+  void restart() {
+  for (int bn = 0; bn < ball.length; bn++) {
+  ball[bn].sx = 100;
+  ball[bn].sy = 50;
+  ball[bn].radius=0.4f*65;
+  ball[bn].MASS = 1;
+  ball[bn].vy=random(50);  
+  ball[bn].vx=random(50);  
+
+
+
+  }
+  
+}
+
   //if mode == Mass
   // CBalls(PApplet pApp, int totalball, float radius) {
   //   minim = new Minim(pApp);
@@ -32,11 +47,12 @@ public class CBalls {
       ball[bn].draw();
   } 
 
- void game_physics() {
-    for (int bn = 0; bn < ball.length; bn++) {
-      ball[bn].game_physics();
-    }
+void game_physics() {
+  for (int bn = 0; bn < ball.length; bn++) {
+    ball[bn].game_physics();
   }
+}
+
 
   void detectCollisions() {
     for (int i = 0; i < ball.length; i++) {
@@ -136,14 +152,14 @@ public class CBalls {
          println("Ball pressed");
 
         if (mouseButton == LEFT) {
-          ball[bn].radius *= 1.049;
+          ball[bn].radius *= 1.05;
           ball[bn].MASS *= 1.1;
         } else if (mouseButton == RIGHT) {
-          ball[bn].radius /= 1.1;
+          ball[bn].radius /= 1.05;
           ball[bn].MASS /= 1.1;
         }
 
-        ball[bn].radius = constrain((float) ball[bn].radius, 0.4f*75, 0.4f*300);
+        ball[bn].radius = constrain((float) ball[bn].radius, 0.4f*65, 0.4f*300);
         ball[bn].MASS = constrain((float) ball[bn].MASS, 1, 10);
     }
   }
