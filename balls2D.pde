@@ -5,7 +5,7 @@
 import ddf.minim.*;    // AudioPlayer, Minim
 
 CBalls theBalls;
-int totalball = 6;               // number of balls 
+int totalball = 10;               // number of balls 
 PFont helpFont;      
 boolean showHelp=false;          // toggle help text
 boolean forceFreeze = false;     // toggle game physics 
@@ -16,7 +16,7 @@ boolean showModes = true;
 //modes
 boolean noCollision = true;
 boolean collision = false;
-boolean someOtherMode = false;
+boolean impulsMasse = false;
 
 
 color c_red = color(255,0,0);
@@ -32,6 +32,7 @@ void setup()
 {
   size(700, 700, P3D);           // although the game physics is 2D, we do the drawing in 3D to allow 
                                  // for 3D-balls (spheres) with directional light and shininess
+                                 
   theBalls = new CBalls(this,totalball);
   helpFont = createFont("Arial", 22, true);
   rightwall_x = width;
@@ -56,9 +57,9 @@ void draw()
     mono = createFont("Cascadia Code", 22);
     textFont(mono);
     fill(255,255,255);
-    text("1: Normalmode ",100,35);
+    text("1: Root Mode / Normalmode ",100,35);
     text("2: Kollisiondetektion",100,35+1*25);
-    text("3: bla",100,35+2*25);
+    text("3: Impuls / Masse",100,35+2*25);
     text("4: bla",100,35+3*25);
   }
     if (noCollision) {
@@ -68,13 +69,13 @@ void draw()
       startDrawingBallsAndPhysics();
         if (!forceFreeze)  
           theBalls.detectCollisions();
-  } else if (someOtherMode) {
-        //ToDo
+  } else if (impulsMasse) {
+        startDrawingBallsAndPhysics();
+        if (!forceFreeze)  
+          theBalls.detectCollisions();
+        theBalls.impulsMasse = true;
 
   }
-  
-
-
 }
 void startDrawingBallsAndPhysics() {
   lightSpecular(255,255,255);
@@ -101,10 +102,10 @@ void boxDraw() {
 
     // ---- activate this code snippet for exercise U5 ------
     
-    beginShape(LINES);
-      vertex(mid_x ,  floor_y);
-      vertex(mid_x ,ceiling_y);
-    endShape();
+    // beginShape(LINES);
+    //   vertex(mid_x ,  floor_y);
+    //   vertex(mid_x ,ceiling_y);
+    // endShape();
                
     // ------------------------------------------------------
 } // boxDraw()
@@ -125,7 +126,7 @@ void keyPressed()
     activateMode("collision");
     break;
   case '3':
-    activateMode("someOtherMode");
+    activateMode("impulsMasse");
     break;
   case ESC:
     exit();
@@ -148,17 +149,25 @@ void keyPressed()
     break;
   }
 }
+
+void restart() {
+  theBalls = new CBalls(this,totalball);
+}
+
+
     void activateMode(String mode) {
+      restart();
   noCollision = false;
   collision = false;
-  someOtherMode = false;
+  impulsMasse = false;
+  theBalls.impulsMasse = false;
 
   if (mode.equals("noCollision")) {
     noCollision = true;
   } else if (mode.equals("collision")) {
     collision = true;
-  } else if (mode.equals("someOtherMode")) {
-    someOtherMode = true;
+  } else if (mode.equals("impulsMasse")) {
+    impulsMasse = true;
   }
 }
 void mousePressed(){
