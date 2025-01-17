@@ -163,8 +163,7 @@ void keyPressed()
 }
 
 void restart() {
-  theBalls = new CBalls(totalball);
-  theBalls = new CBalls(totalball);
+theBalls.restart();
 }
 
 
