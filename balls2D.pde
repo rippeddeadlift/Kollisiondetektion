@@ -1,10 +1,11 @@
 /**
  * Basic version of balls-project 
- * 	(no collision, no textures)
+ *   (no collision, no textures)
  */
 import ddf.minim.*;    // AudioPlayer, Minim
 
 CBalls theBalls;
+VectorDrawer vd;
 int totalball = 10;               // number of balls 
 PFont helpFont;      
 boolean showHelp=false;          // toggle help text
@@ -12,6 +13,7 @@ boolean forceFreeze = false;     // toggle game physics
 boolean frictionMode=false;      // may be used in class Ball
 boolean randomFloor = true;      // may be used in class Ball
 boolean showModes = true;
+boolean drawVector = false;
 
 //modes
 boolean noCollision = true;
@@ -34,6 +36,7 @@ void setup()
                                  // for 3D-balls (spheres) with directional light and shininess
                                  
   theBalls = new CBalls(this,totalball);
+  vd = new VectorDrawer();
   helpFont = createFont("Arial", 22, true);
   rightwall_x = width;
   floor_y     = height;
@@ -51,7 +54,6 @@ void draw()
   //   text("<ESC>: exit",100,35+3*25);
   // } 
     background(80);  // gray background 
-
   if (showModes) {
     PFont mono;
     mono = createFont("Cascadia Code", 22);
@@ -64,7 +66,6 @@ void draw()
   }
     if (noCollision) {
       startDrawingBallsAndPhysics();
-
   } else if (collision) {
       startDrawingBallsAndPhysics();
         if (!forceFreeze)  
@@ -74,7 +75,6 @@ void draw()
         if (!forceFreeze)  
           theBalls.detectCollisions();
         theBalls.impulsMasse = true;
-
   }
 }
 void startDrawingBallsAndPhysics() {
@@ -85,7 +85,9 @@ void startDrawingBallsAndPhysics() {
   theBalls.draw();
   if (!forceFreeze)  
     theBalls.game_physics();
-
+  if(drawVector){
+    vd.draw(theBalls);
+  }
 }
 
 
@@ -128,6 +130,9 @@ void keyPressed()
   case '3':
     activateMode("impulsMasse");
     break;
+  case 'v':
+      drawVector = !drawVector;
+      break;
   case ESC:
     exit();
     break;
