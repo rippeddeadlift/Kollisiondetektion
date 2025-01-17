@@ -44,7 +44,6 @@ public class CBalls {
 
   void draw() 
   {
-    qtree.show();
     // draw the balls
     for (int bn=0; bn < ball.length; bn++) 
       ball[bn].draw();
@@ -59,9 +58,9 @@ void game_physics() {
 
   void detectCollisions() {
     //log(n^2) Algorithmus (BF)
-    //bruteforce();
+    bruteforce();
     //log(nlog(n) Algorithmus (QuadTree))
-    quadTreeDetection();
+    //quadTreeDetection();
   }
 
  
