@@ -7,7 +7,7 @@ import ddf.minim.*;    // AudioPlayer, Minim
 CBalls theBalls;
 VectorDrawer vd;
 int totalball = 10;               // number of balls 
-PFont helpFont;      
+PFont mono;
 boolean showHelp=false;          // toggle help text
 boolean forceFreeze = false;     // toggle game physics 
 boolean frictionMode=false;      // may be used in class Ball
@@ -56,6 +56,7 @@ void setup()
   pg.endDraw();
 
 }
+
 void draw() 
 {
     background(80);  // gray background 
