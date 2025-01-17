@@ -38,7 +38,6 @@ void setup()
   size(700, 700, P3D);            
   theBalls = new CBalls(totalball);
   vd = new VectorDrawer();
-  helpFont = createFont("Arial", 22, true);
   rightwall_x = width;
   floor_y     = height;
   mid_x = width/2.0;
