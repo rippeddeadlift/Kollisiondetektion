@@ -6,6 +6,7 @@ import ddf.minim.*;    // AudioPlayer, Minim
 
 CBalls theBalls;
 VectorDrawer vd;
+VectorDrawer vd;
 int totalball = 10;               // number of balls 
 PFont helpFont;      
 boolean showHelp=false;          // toggle help text
@@ -14,11 +15,14 @@ boolean frictionMode=false;      // may be used in class Ball
 boolean randomFloor = true;      // may be used in class Ball
 boolean showModes = true;
 boolean drawVector = false;
+boolean drawVector = false;
 
 //modes
 boolean noCollision = true;
 boolean collision = false;
 boolean impulsMasse = false;
+TunnelingDemo tunnelingDemo = new TunnelingDemo();
+Mode currentMode = Mode.NOCOLLISION;
 TunnelingDemo tunnelingDemo = new TunnelingDemo();
 Mode currentMode = Mode.NOCOLLISION;
 
@@ -34,6 +38,9 @@ Minim minim;
 
 void setup() 
 {
+  size(700, 700, P3D);            
+  theBalls = new CBalls(totalball);
+  vd = new VectorDrawer();
   size(700, 700, P3D);            
   theBalls = new CBalls(totalball);
   vd = new VectorDrawer();
@@ -89,6 +96,12 @@ void startDrawingBallsAndPhysics() {
   if(currentMode == Mode.TUNNELING){
     tunnelingDemo.draw();
   }
+  if(drawVector){
+    vd.draw(theBalls);
+  }
+  if(currentMode == Mode.TUNNELING){
+    tunnelingDemo.draw();
+  }
 }
 
 
@@ -104,6 +117,8 @@ void boxDraw() {
     endShape();
 } 
 
+} 
+
 
 void keyPressed()
 {
@@ -111,11 +126,26 @@ void keyPressed()
   {
   case '1':
     activateMode(Mode.NOCOLLISION);
+    activateMode(Mode.NOCOLLISION);
     break;
   case '2':
     activateMode(Mode.COLLISION);
+    activateMode(Mode.COLLISION);
     break;
   case '3':
+    activateMode(Mode.IMPULSE);
+    break;
+  case '4':
+    activateMode(Mode.TUNNELING);
+    break;
+  case 'v':
+      drawVector = !drawVector;
+      break;
+  case 't':
+     if(currentMode == Mode.TUNNELING){
+       tunnelingDemo.adjustFramerateAndYVelocity();
+     }
+      break;
     activateMode(Mode.IMPULSE);
     break;
   case '4':
@@ -153,9 +183,12 @@ void keyPressed()
 
 void restart() {
   theBalls = new CBalls(totalball);
+  theBalls = new CBalls(totalball);
 }
 
 
+void activateMode(Mode mode) {
+  restart();
 void activateMode(Mode mode) {
   restart();
   noCollision = false;
@@ -182,8 +215,29 @@ void activateMode(Mode mode) {
       tunnelingDemo.init(theBalls);
       currentMode = Mode.TUNNELING;
       break;
+  switch(mode){
+    case NOCOLLISION:
+      noCollision = true;
+      tunnelingDemo.close();
+      break;
+    case COLLISION:
+      collision = true;
+      tunnelingDemo.close();
+      break;
+    case IMPULSE:
+      impulsMasse = true;
+      tunnelingDemo.close();
+      break;
+    case TUNNELING:
+      showModes = false;
+      collision = true;
+      theBalls = new CBalls(1);
+      tunnelingDemo.init(theBalls);
+      currentMode = Mode.TUNNELING;
+      break;
   }
 }
+
 
 void mousePressed(){
   theBalls.Mouse();
@@ -192,3 +246,4 @@ void mousePressed(){
 void mouseReleased(){
   theBalls.MouseUp();
 }
+
