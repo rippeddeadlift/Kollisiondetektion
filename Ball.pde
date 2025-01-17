@@ -24,7 +24,7 @@ public class Ball
   boolean mousedown   = false;
 
   Ball (Minim minim, int count) {
-    radius=0.4f*60;
+    this.radius=0.4f*60;
     this.bn=count;
     // we initialize with increasingly more negative 'times' 
     // >> the balls pop up one after another:
@@ -169,8 +169,10 @@ public class Ball
     if (mouseButton == LEFT)           // if user clicked
     {
       mousedown = true;
+
     }
   }
+  
 
   /* Released mouse */
   void MouseUp ()

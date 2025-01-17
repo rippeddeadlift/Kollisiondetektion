@@ -3,7 +3,7 @@
  * Container class for a number (totalball) of Ball objects
  */
 public class CBalls {
-
+  boolean impulsMasse = false;
   boolean mousedown   = false;
 
   Ball[] ball;
@@ -15,6 +15,15 @@ public class CBalls {
     for (int bn=0; bn < ball.length; bn++) 
       ball[bn] = new Ball(minim, bn);
   }
+
+  //if mode == Mass
+  // CBalls(PApplet pApp, int totalball, float radius) {
+  //   minim = new Minim(pApp);
+
+  //   ball = new Ball[totalball];
+  //   for (int bn=0; bn < ball.length; bn++) 
+  //     ball[bn] = new Ball(minim, bn, radius);
+  // }
 
   void draw() 
   {
@@ -45,6 +54,7 @@ public class CBalls {
 
 
         if (distance < b1.Radius() + b2.Radius()) {
+
 
 
           float overlap = 0.5f * (distance - b1.Radius() - b2.Radius());
@@ -115,21 +125,45 @@ public class CBalls {
     minim.stop();
   }
 
+
   /* Clicked mouse */
-  void Mouse ()
-  {
-    if (mouseButton == LEFT) System.out.printf("State: MOUSE_DOWN\n");
-    for (int bn=0; bn < ball.length; bn++) { 
-      ball[bn].Mouse();
+  void Mouse() {
+    if (impulsMasse){
+    System.out.printf("State: MOUSE_DOWN\n");
+
+    for (int bn = 0; bn < ball.length; bn++) {
+      if (isMouseOverBall(ball[bn], mouseX, mouseY)) {
+         println("Ball pressed");
+
+        if (mouseButton == LEFT) {
+          ball[bn].radius *= 1.049;
+          ball[bn].MASS *= 1.1;
+        } else if (mouseButton == RIGHT) {
+          ball[bn].radius /= 1.1;
+          ball[bn].MASS /= 1.1;
+        }
+
+        ball[bn].radius = constrain((float) ball[bn].radius, 0.4f*75, 0.4f*300);
+        ball[bn].MASS = constrain((float) ball[bn].MASS, 1, 10);
     }
   }
+}}
+  
+
+boolean isMouseOverBall(Ball b, float mx, float my) {
+  float dx = b.Sx() - mx;
+  float dy = b.Sy() - my;
+  return sqrt(dx * dx + dy * dy) <= b.radius;
+}
+
+
 
   /* Released mouse */
   void MouseUp ()
   {
-    System.out.printf("State: MOUSE_RELEASED\n");
-    for (int bn=0; bn < ball.length; bn++) { 
-      ball[bn].MouseUp();
-    }
+    // System.out.printf("State: MOUSE_RELEASED\n");
+    // for (int bn=0; bn < ball.length; bn++) { 
+    //   ball[bn].MouseUp();
+    // }
   }
 }
