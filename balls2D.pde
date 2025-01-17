@@ -122,13 +122,16 @@ void keyPressed()
   switch(key)
   {
   case '1':
-    activateMode("noCollision");
+    activateMode(Mode.NOCOLLISION);
     break;
   case '2':
-    activateMode("collision");
+    activateMode(Mode.COLLISION);
     break;
   case '3':
-    activateMode("impulsMasse");
+    activateMode(Mode.IMPULSE);
+    break;
+  case '4':
+    activateMode(Mode.TUNNELING);
     break;
   case 'v':
       drawVector = !drawVector;
@@ -160,21 +163,29 @@ void restart() {
 }
 
 
-    void activateMode(String mode) {
-      restart();
+void activateMode(Mode mode) {
+  restart();
   noCollision = false;
   collision = false;
   impulsMasse = false;
   theBalls.impulsMasse = false;
-
-  if (mode.equals("noCollision")) {
-    noCollision = true;
-  } else if (mode.equals("collision")) {
-    collision = true;
-  } else if (mode.equals("impulsMasse")) {
-    impulsMasse = true;
+  switch(mode){
+    case NOCOLLISION:
+      noCollision = true;
+      break;
+    case COLLISION:
+      collision = true;
+      break;
+    case IMPULSE:
+      impulsMasse = true;
+      break;
+    case TUNNELING:
+      showModes = false;
+      TunnelingDemo.init();
+      break;
   }
 }
+
 void mousePressed(){
   theBalls.Mouse();
 }
