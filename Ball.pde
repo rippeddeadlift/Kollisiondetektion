@@ -48,6 +48,12 @@ public class Ball
     shininess(5.0);
     sphere(this.Radius());  
     if(makeEffet){
+      drawEffet();
+    }
+    popMatrix();
+  }
+}
+  void drawEffet(){
     float px = (float)radius /3 ; 
     float py = 0;             
     float pz =0; 
@@ -58,10 +64,7 @@ public class Ball
     noStroke();
     sphere((float)radius * 0.71); 
     popMatrix();
-    }
-    popMatrix();
   }
-}
 
 
   void game_physics()
