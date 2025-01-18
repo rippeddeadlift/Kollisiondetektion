@@ -51,14 +51,15 @@ public class TunnelingDemo{
   }
   
   void showHint(){
+    //TODO: text() to graphic and display graphic as bg.
     PFont mono;
     mono = createFont("Cascadia Code", 22);
     textFont(mono);
     fill(255,255,255);
     if(counter % 2 == 0){
-      text(HIGH_FPS_HINT_TEXT, 100,35);
+      //text(HIGH_FPS_HINT_TEXT, 100,35);
     }else{
-      text(LOW_FPS_HINT_TEXT, 100,35);
+      //text(LOW_FPS_HINT_TEXT, 100,35);
     }
   }
   
