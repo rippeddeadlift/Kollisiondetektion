@@ -6,7 +6,7 @@
  */
 public class Ball
 {
-  double DT = 0.06;	// time increment
+  double DT = 0.06;	// time incretment
   double MASS = 1.0;
   double g_acc = +9.8;	// gravity constant
   color ballColor = color(255,0,0);
@@ -48,7 +48,7 @@ public class Ball
     shininess(5.0);
     sphere(this.Radius());  
     if(makeEffet){
-    float px = (float)radius /3 ; 
+    float px = (float)radius; 
     float py = 0;             
     float pz =0; 
       

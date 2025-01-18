@@ -3,17 +3,18 @@
  * 	(no collision, no textures)
  */
 import ddf.minim.*;    // AudioPlayer, Minim
-
 CBalls theBalls;
 VectorDrawer vd;
-int totalball = 10;               // number of balls 
+int totalball = 5;               // number of balls 
 PFont mono;
+Effet effet;
 boolean showHelp=false;          // toggle help text
 boolean forceFreeze = false;     // toggle game physics 
 boolean frictionMode=false;      // may be used in class Ball
 boolean randomFloor = true;      // may be used in class Ball
 boolean showModes = true;
 boolean drawVector = false;
+boolean makeEffet = false;
 
 //modes
 boolean noCollision = true;
@@ -21,8 +22,6 @@ boolean collision = false;
 boolean impulsMasse = false;
 TunnelingDemo tunnelingDemo = new TunnelingDemo();
 Mode currentMode = Mode.NOCOLLISION;
-
-
 
 color c_red = color(255,0,0);
 float leftwall_x  = 0;
@@ -38,6 +37,7 @@ void setup()
   size(700, 700, P3D);            
   theBalls = new CBalls(totalball);
   vd = new VectorDrawer();
+  effet = new Effet(theBalls);
   mono = createFont("Cascadia Code", 22); 
   rightwall_x = width;
   floor_y     = height;
@@ -51,13 +51,15 @@ void draw()
     
     textFont(mono);
     fill(255,255,255);
-    text("1: Root Mode / Normalmode ",100,35);
-    text("2: Kollisiondetektion",100,35+1*25);
-    text("3: Impuls / Masse",100,35+2*25);
-    text("4: Tunneling Demonstration",100,35+3*25);
+    text("1: Root Mode / Normalmode ",10,35);
+    text("2: Kollisiondetektion",10,35+1*25);
+    text("3: Impuls / Masse ",10,35+2*25);
+    text("4: Tunneling Demonstration",10,35+3*25);
+    text("e: Effet ",400,35);
+    text("v: VectorDrawer",400,35+1*25);
      if(impulsMasse){
-    text("Ball Linksclick: Radius + 5%, Masse + 10% ",100,35+25*25);
-    text("Ball Rechtsclick: Radius - 5%, Masse - 10% ",100,35+26*25);
+    text("Ball Linksclick: Radius + 5%, Masse + 10% ",10,35+25*25);
+    text("Ball Rechtsclick: Radius - 5%, Masse - 10% ",10,35+26*25);
     }
   }
 
@@ -84,6 +86,9 @@ void startDrawingBallsAndPhysics() {
     theBalls.game_physics();
   if(drawVector){
     vd.draw(theBalls);
+  }
+  if(makeEffet){
+    effet.draw();
   }
   if(currentMode == Mode.TUNNELING){
     tunnelingDemo.draw();
@@ -123,6 +128,12 @@ void keyPressed()
     break;
   case 'v':
       drawVector = !drawVector;
+      break;
+  case 'e':
+      makeEffet = !makeEffet;
+      if (!makeEffet){
+        effet.resetBallFlags();
+      }
       break;
   case 't':
      if(currentMode == Mode.TUNNELING){
@@ -194,4 +205,3 @@ void mousePressed(){
 void mouseReleased(){
   theBalls.MouseUp();
 }
-
