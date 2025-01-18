@@ -9,7 +9,6 @@ public class CBalls {
   Ball[] ball;
 
   CBalls(int totalball) {
-
     ball = new Ball[totalball];
     for (int bn=0; bn < ball.length; bn++) 
       ball[bn] = new Ball(bn);
@@ -23,33 +22,23 @@ public class CBalls {
   ball[bn].MASS = 1;
   ball[bn].vy=random(50);  
   ball[bn].vx=random(50);  
-
-
-
   }
-  
 }
-
-  //if mode == Mass
-  // CBalls(PApplet pApp, int totalball, float radius) {
-  //   minim = new Minim(pApp);
-
-  //   ball = new Ball[totalball];
-  //   for (int bn=0; bn < ball.length; bn++) 
-  //     ball[bn] = new Ball(minim, bn, radius);
-  // }
 
   void draw() 
   {
     // draw the balls
-    for (int bn=0; bn < ball.length; bn++) 
+    for (int bn=0; bn < ball.length; bn++) {
       ball[bn].draw();
+    }
   } 
 
 void game_physics() {
   for (int bn = 0; bn < ball.length; bn++) {
     ball[bn].game_physics();
   }
+
+
 }
 
 
@@ -129,6 +118,8 @@ boolean isMouseOverBall(Ball b, float mx, float my) {
      float dvx = (float)(b1.vx - b2.vx);
      float dvy = (float)(b1.vy - b2.vy);
   
+
+  //dot() for dot product
      float skalarprodukt = dvx * nx + dvy * ny;
   
      if (skalarprodukt <= 0){
