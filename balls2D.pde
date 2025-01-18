@@ -21,7 +21,7 @@ boolean collision = false;
 boolean impulsMasse = false;
 TunnelingDemo tunnelingDemo = new TunnelingDemo();
 Mode currentMode = Mode.NOCOLLISION;
-
+PGraphics pg;
 
 
 color c_red = color(255,0,0);
@@ -38,29 +38,28 @@ void setup()
   size(700, 700, P3D);            
   theBalls = new CBalls(totalball);
   vd = new VectorDrawer();
-  mono = createFont("Cascadia Code", 22); 
   rightwall_x = width;
   floor_y     = height;
   mid_x = width/2.0;
+
+  frameRate(50);
+  pg = createGraphics(width, height);
+  pg.beginDraw();
+  PFont mono = createFont("Cascadia Code", 22);
+  pg.textFont(mono);
+  pg.fill(255, 255, 255);
+  pg.text("1: Root Mode / Normalmode ", 100, 35);
+  pg.text("2: Kollisiondetektion", 100, 35 + 1 * 25);
+  pg.text("3: Impuls / Masse", 100, 35 + 2 * 25);
+  pg.text("4: Tunneling Demonstration", 100, 35 + 3 * 25);
+  pg.endDraw();
+
 }
 
 void draw() 
 {
     background(80);  // gray background 
-  if (showModes) {   
-    
-    textFont(mono);
-    fill(255,255,255);
-    text("1: Root Mode / Normalmode ",100,35);
-    text("2: Kollisiondetektion",100,35+1*25);
-    text("3: Impuls / Masse",100,35+2*25);
-    text("4: Tunneling Demonstration",100,35+3*25);
-     if(impulsMasse){
-    text("Ball Linksclick: Radius + 5%, Masse + 10% ",100,35+25*25);
-    text("Ball Rechtsclick: Radius - 5%, Masse - 10% ",100,35+26*25);
-    }
-  }
-
+    if(showModes) image(pg, 0, 0);
     if (noCollision) {
       startDrawingBallsAndPhysics();
   } else if (collision) {
@@ -166,14 +165,17 @@ void activateMode(Mode mode) {
   switch(mode){
     case NOCOLLISION:
       noCollision = true;
+      theBalls = new CBalls(totalball);
       tunnelingDemo.close();
       break;
     case COLLISION:
       collision = true;
+      theBalls = new CBalls(totalball);
       tunnelingDemo.close();
       break;
     case IMPULSE:
       impulsMasse = true;
+      theBalls = new CBalls(totalball);
       tunnelingDemo.close();
       break;
     case TUNNELING:
@@ -194,4 +196,3 @@ void mousePressed(){
 void mouseReleased(){
   theBalls.MouseUp();
 }
-
