@@ -39,6 +39,7 @@ void setup()
   size(700, 700, P3D);            
   theBalls = new CBalls(totalball);
   vd = new VectorDrawer();
+  effet = new Effet(theBalls);
   rightwall_x = width;
   floor_y     = height;
   mid_x = width/2.0;
@@ -49,10 +50,12 @@ void setup()
   PFont mono = createFont("Cascadia Code", 22);
   pg.textFont(mono);
   pg.fill(255, 255, 255);
-  pg.text("1: Root Mode / Normalmode ", 100, 35);
-  pg.text("2: Kollisiondetektion", 100, 35 + 1 * 25);
-  pg.text("3: Impuls / Masse", 100, 35 + 2 * 25);
-  pg.text("4: Tunneling Demonstration", 100, 35 + 3 * 25);
+  pg.text("1: Root Mode / Normalmode ", 10, 35);
+  pg.text("2: Kollisiondetektion", 10, 35 + 1 * 25);
+  pg.text("3: Impuls / Masse", 10, 35 + 2 * 25);
+  pg.text("4: Tunneling Demonstration", 10, 35 + 3 * 25);
+  pg.text("e: Effet ",400,35);
+  pg.text("v: VectorDrawer",400,35+1*25);
   pg.endDraw();
 
 }
