@@ -172,12 +172,10 @@ void keyPressed()
 }
 
 void restart() {
-theBalls.restart();
 }
 
 
 void activateMode(Mode mode) {
-  restart();
 
   noCollision = false;
   collision = false;
