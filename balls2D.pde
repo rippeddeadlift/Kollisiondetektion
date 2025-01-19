@@ -59,7 +59,6 @@ void setup()
   pg.endDraw();
 
 }
-
 void draw() 
 {
     background(80);  // gray background 
@@ -79,24 +78,41 @@ void draw()
     }
 }
 void startDrawingBallsAndPhysics() {
-  lightSpecular(255,255,255);
-  directionalLight(204, 204, 204, 0, +1, -1);
-  translate(0,0,-2);    // optional, just to show the box border
-  boxDraw();
-  theBalls.draw();
-  if (!forceFreeze)  
-    theBalls.game_physics();
-  if(drawVector){
-    vd = new VectorDrawer();
-    vd.draw(theBalls);
-  }
-  if(makeEffet && !forceFreeze){
-    effet = new Effet(theBalls);
-    effet.draw();
-  }
-  if(currentMode == Mode.TUNNELING){
-    tunnelingDemo.draw();
-  }
+    setupLighting();
+    drawScene();
+    handlePhysics();
+    handleOptionalEffects();
+}
+
+void setupLighting() {
+    lightSpecular(255, 255, 255);
+    directionalLight(204, 204, 204, 0, +1, -1);
+}
+
+void drawScene() {
+    translate(0, 0, -2); // Optional, just to show the box border
+    boxDraw();
+    theBalls.draw();
+}
+
+void handlePhysics() {
+    if (!forceFreeze) {
+        theBalls.game_physics();
+    }
+}
+
+void handleOptionalEffects() {
+    if (drawVector) {
+        VectorDrawer vd = new VectorDrawer();
+        vd.draw(theBalls);
+    }
+    if (makeEffet && !forceFreeze) {
+        Effet effet = new Effet(theBalls);
+        effet.draw();
+    }
+    if (currentMode == Mode.TUNNELING) {
+        tunnelingDemo.draw();
+    }
 }
 
 // draw the sphere-confing box

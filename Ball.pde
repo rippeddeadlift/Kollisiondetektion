@@ -14,7 +14,7 @@ public class Ball
   float angleY = 0;
   boolean makeEffet = false;
   PShape our_sphere;
-  PImage texture = loadImage("textur.png");
+  PImage texture = loadImage("rainbow-square.png");
   boolean mousedown   = false;
 
   Ball (int count) {
@@ -49,16 +49,12 @@ public class Ball
   {
     double dx, dy;
     this.times+=DT;
-
     accumulateForces();
-
     dx = this.vx * DT;
     dy = this.vy * DT;
     this.vx += this.ax * DT;
     this.vy += this.ay * DT;
-
     applyBoundaryReflections(dx, dy); // modifies this.sx, .sy, .vx, .vy
-
     /*
      println("sx,sy = "+ this.sx+", "+this.sy);
      println("ax,ay = "+ this.ax+", "+this.ay);
