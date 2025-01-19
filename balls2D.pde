@@ -198,7 +198,6 @@ void activateMode(Mode mode) {
       tunnelingDemo.close();
       break;
     case TUNNELING:
-      showModes = false;
       collision = true;
       theBalls = new CBalls(1);
       tunnelingDemo.init(theBalls);
