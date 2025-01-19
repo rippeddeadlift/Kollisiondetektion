@@ -5,7 +5,7 @@
 import ddf.minim.*;    // AudioPlayer, Minim
 CBalls theBalls;
 VectorDrawer vd;
-int totalball = 5;               // number of balls 
+int totalball = 10;               // number of balls 
 PFont mono;
 Effet effet;
 boolean showHelp=false;          // toggle help text
@@ -144,6 +144,7 @@ void keyPressed()
       break;
   case 't':
      if(currentMode == Mode.TUNNELING){
+      println("im in tunneling mode");
        tunnelingDemo.adjustFramerateAndYVelocity();
      }
       break;
@@ -175,31 +176,43 @@ theBalls.restart();
 
 
 void activateMode(Mode mode) {
-  restart();
+  
 
   noCollision = false;
   collision = false;
   impulsMasse = false;
   theBalls.impulsMasse = false;
+  if (mode != mode.TUNNELING) {
+    restart();
+    showModes = true;
+    tunnelingDemo.close();
+  }
   switch(mode){
     case NOCOLLISION:
       noCollision = true;
-      tunnelingDemo.close();
+      currentMode = Mode.NOCOLLISION;
       break;
     case COLLISION:
       collision = true;
-      tunnelingDemo.close();
+      currentMode = Mode.COLLISION;
       break;
     case IMPULSE:
       impulsMasse = true;
-      tunnelingDemo.close();
+      currentMode = Mode.IMPULSE;
       break;
     case TUNNELING:
       showModes = false;
       collision = true;
-      theBalls = new CBalls(1);
-      tunnelingDemo.init(theBalls);
+
+      for (int i = 1; i < theBalls.ball.length; i++) {
+        Ball ball = theBalls.ball[i];
+        
+        ball.active = false; 
+      }
+
+      //CBalls theBallss = new CBalls(1);
       currentMode = Mode.TUNNELING;
+      tunnelingDemo.init(theBalls);
       break;
  
 }}

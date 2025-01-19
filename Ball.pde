@@ -19,6 +19,7 @@ public class Ball
   float angleX = 0; 
   float angleY = 0;
   boolean makeEffet = false;
+  boolean active = true;
          
 
   boolean mousedown   = false;
@@ -36,6 +37,7 @@ public class Ball
   }
 
  void draw() {
+  if (!active) return;
   if (times >= 0) {
     pushMatrix();
     translate(Sx(), Sy(), 0); 

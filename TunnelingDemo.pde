@@ -8,6 +8,10 @@ public class TunnelingDemo{
   boolean active = false;
   int counter = 0;
   
+    PGraphics pgHigh;
+    PGraphics pgLow;
+    PFont mono;
+  
   public void init(CBalls ballContainer){
     this.active = true;
     this.ballContainer = ballContainer;
@@ -15,11 +19,13 @@ public class TunnelingDemo{
     ball.vx = 0;
     ball.sx = width/2;
     frameRate(60);
+    hintGraphics();
     draw();
   }
   void draw(){
-    showHint();
     if(active){
+      
+    showHint();
       if(collisionDetected){
         fill(255,255,0);
       }else{
@@ -45,21 +51,39 @@ public class TunnelingDemo{
        collisionDetected = false;
      };
   }
+    void hintGraphics() {
+    pgHigh = createGraphics(width, height);
+    pgLow = createGraphics(width, height);
+    mono = createFont("Cascadia Code", 22);
+
+    pgHigh.beginDraw();
+    pgHigh.textFont(mono);
+    pgHigh.fill(255, 0, 0);
+    pgHigh.text(HIGH_FPS_HINT_TEXT, 10, 35);
+    pgHigh.endDraw();
+
+    pgLow.beginDraw();
+    pgLow.textFont(mono);
+    pgLow.fill(255, 0, 0);
+    pgLow.text(LOW_FPS_HINT_TEXT, 10, 35);
+    pgLow.endDraw();
+  }
   
   void close(){
     this.active = false;
+      pgHigh = null;
+      pgLow = null;
   }
   
   void showHint(){
     //TODO: text() to graphic and display graphic as bg.
-    PFont mono;
-    mono = createFont("Cascadia Code", 22);
+
     textFont(mono);
     fill(255,255,255);
     if(counter % 2 == 0){
-      //text(HIGH_FPS_HINT_TEXT, 100,35);
+      image(pgHigh, 0, 0);  
     }else{
-      //text(LOW_FPS_HINT_TEXT, 100,35);
+      image(pgLow, 0, 0);  
     }
   }
   
