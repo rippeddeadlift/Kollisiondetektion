@@ -19,6 +19,7 @@ public class Ball
   float angleX = 0; 
   float angleY = 0;
   boolean makeEffet = false;
+  boolean active = true;
          
 
   boolean mousedown   = false;
@@ -36,6 +37,7 @@ public class Ball
   }
 
  void draw() {
+  if (!active) return;
   if (times >= 0) {
     pushMatrix();
     translate(Sx(), Sy(), 0); 
@@ -48,6 +50,12 @@ public class Ball
     shininess(5.0);
     sphere(this.Radius());  
     if(makeEffet){
+      drawEffet();
+    }
+    popMatrix();
+  }
+}
+  void drawEffet(){
     float px = (float)radius /3 ; 
     float py = 0;             
     float pz =0; 
@@ -58,10 +66,7 @@ public class Ball
     noStroke();
     sphere((float)radius * 0.71); 
     popMatrix();
-    }
-    popMatrix();
   }
-}
 
 
   void game_physics()

@@ -19,13 +19,16 @@ public class CBalls {
   }
 
   void restart() {
+    
+  frameRate(50);
   for (int bn = 0; bn < ball.length; bn++) {
   ball[bn].sx = 100;
   ball[bn].sy = 50;
-  ball[bn].radius=0.4f*65;
+  ball[bn].radius=0.4f*60;
   ball[bn].MASS = 1;
   ball[bn].vy=random(50);  
-  ball[bn].vx=random(50);  
+  ball[bn].vx=random(50); 
+  ball[bn].active = true;
   }
 }
 
@@ -33,7 +36,7 @@ public class CBalls {
   {
     // draw the balls
     for (int bn=0; bn < ball.length; bn++) {
-      ball[bn].draw();
+       ball[bn].draw();
     }
   } 
 
@@ -144,7 +147,8 @@ boolean isMouseOverBall(Ball b, float mx, float my) {
       b2.sx += overlap * (b1.sx - b2.sx) / distance;
       b2.sy += overlap * (b1.sy - b2.sy) / distance;
     }
-   
+     float nx = dx / distance;
+     float ny = dy / distance;
      float dvx = (float)(b1.vx - b2.vx);
      float dvy = (float)(b1.vy - b2.vy);
   
