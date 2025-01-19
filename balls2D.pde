@@ -28,8 +28,6 @@ float rightwall_x;
 float floor_y;
 float mid_x;
 
-Minim minim; 
-
 void setup() 
 {
   size(700, 700, P3D);
@@ -47,7 +45,7 @@ void setup()
   pg.fill(255, 255, 255);
   pg.text("1: Root Mode / Normalmode ", 10, 35);
   pg.text("2: Kollisiondetektion", 10, 35 + 1 * 25);
-  pg.text("3: Impuls / Masse", 10, 35 + 2 * 25);
+  pg.text("3: Impuls Demonstration", 10, 35 + 2 * 25);
   pg.text("4: Tunneling Demonstration", 10, 35 + 3 * 25);
   pg.text("e: Effet ",400,35);
   pg.text("v: VectorDrawer",400,35+1*25);
