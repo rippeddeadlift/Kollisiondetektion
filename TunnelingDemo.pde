@@ -14,11 +14,13 @@ public class TunnelingDemo{
   
   public void init(CBalls ballContainer){
     this.active = true;
+    counter = 0;
     this.ballContainer = ballContainer;
     this.ball = ballContainer.balls.get(0);
     ball.vx = 0;
     ball.sx = width/2;
-    frameRate(60);
+    ball.sy = 0;
+    frameRate(50);
     hintGraphics();
     draw();
   }
@@ -27,9 +29,9 @@ public class TunnelingDemo{
       
     showHint();
       if(collisionDetected){
-        fill(255,255,0);
+        fill(255,127,255);
       }else{
-        fill(0,255,0);
+        fill(255,255,0);
       }
       rect(0, height / 2,  width, 50);
       detectCollisionWithRectangle(ball, 0f, float(height/2), float(width), 50f);
