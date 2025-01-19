@@ -140,7 +140,24 @@ Beispiel aus dem Code:
 				b2.vy += impuls * b1.MASS * ny;
 			};
 		\end{verbatim}
-
+		
+		
+		\subsection{Überlappung}
+		
+In der Computergrafik kann es bei Kollisionen zu einer sogenannten Überlappung (engl. "Overlap") kommen, da sich die Objekte zwischen den einzelnen Frames weiterbewegen. Diese Überlappung wird durch die Kollisionserkennung festgestellt und kann durch Anpassung der Positionen der beteiligten Objekte korrigiert werden, sodass sie nicht mehr übereinander liegen.
+	\vspace{0.5cm}
+		
+Im Code wird dies wie folgt umgesetzt:
+\begin{verbatim}
+    float overlap =  (distance - (b1.Radius() + b2.Radius()));
+    
+    if (overlap < 0){
+    	b1.sx -= overlap * (b1.sx - b2.sx) / distance;
+    	b1.sy -= overlap * (b1.sy - b2.sy) / distance;
+    	b2.sx += overlap * (b1.sx - b2.sx) / distance;
+    	b2.sy += overlap * (b1.sy - b2.sy) / distance;
+    }
+\end{verbatim}
 		
 		
 		\subsection{Effet}
@@ -195,10 +212,29 @@ Beispiel aus dem Code:
 	
 	
 	\subsection{Impuls-Demonstration}
+In dieser Demonstration hat der Benutzer die Möglichkeit, per Mausklick die Masse der Bälle zu steuern.  
+Mit einer größeren Masse, wächst auch der Radius. 
+\begin{itemize}
+	\item Linksklick: \texttt{+10\%} Masse, \texttt{+5\%} Radius  
+	\item Rechtsklick: \texttt{-10\%} Masse, \texttt{-5\%} Radius  
+\end{itemize}
+
+Durch den direkten Einfluss auf die Masse kann der Benutzer beobachten, wie sich der Impuls bei Kollisionen mit Bällen verhält, die mehr oder weniger Masse haben.  
+
+Der Radius hat ebenfalls einen Einfluss auf den \emph{Effet} Effekt, da eine größere Radiusgröße zu einer langsameren Rotation führt.
+
+	
 	
 	\subsection{Effet}
 	
-	\section{Fazit }
+	Der Effet Effekt, wie schon oben beschrieben, zeigt uns die Rotation. Dieser Effekt kann im gesamten Programm mit der Taste \texttt{E} ein- und ausgeschaltet werden.
+	
+	\section{Fazit}
+	
+Dieses Projekt sowie das Tool Processing bieten eine sehr gute Möglichkeit, Physik auf anschauliche Weise für Studierende zu demonstrieren. Durch die verschiedenen Projekte und eine spielerische Herangehensweise können vordefinierte Körper mit bekannten Formeln in relativ großen Programmen simuliert und getestet werden. Da die IDE jedoch nicht immer die beste Performance bietet, ist es besonders wichtig, auf Clean Code und die Vermeidung von Memory Leaks zu achten.
+	
+	
+	
 	
 	\newpage
 \begin{thebibliography}{5}
