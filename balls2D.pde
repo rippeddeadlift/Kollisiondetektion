@@ -70,18 +70,13 @@ void draw()
       text("Ball Rechtsclick: -10% Masse, -5% Radius", 10, 600 + 3 * 25);
     }
     if(showModes) background(pg);
-    if (noCollision) {
-      startDrawingBallsAndPhysics();
-  } else if (collision) {
-      startDrawingBallsAndPhysics();
-        if (!forceFreeze)  
-          theBalls.detectCollisions();
-  } else if (impulsMasse) {
-        startDrawingBallsAndPhysics();
-        if (!forceFreeze)  
-          theBalls.detectCollisions();
+    startDrawingBallsAndPhysics();
+    if (!forceFreeze && (collision || impulsMasse)) {
+        theBalls.detectCollisions();
+    }
+    if (impulsMasse) {
         theBalls.impulsMasse = true;
-  }
+    }
 }
 void startDrawingBallsAndPhysics() {
   lightSpecular(255,255,255);
@@ -95,7 +90,7 @@ void startDrawingBallsAndPhysics() {
     vd = new VectorDrawer();
     vd.draw(theBalls);
   }
-  if(makeEffet){
+  if(makeEffet && !forceFreeze){
     effet = new Effet(theBalls);
     effet.draw();
   }
@@ -103,7 +98,6 @@ void startDrawingBallsAndPhysics() {
     tunnelingDemo.draw();
   }
 }
-
 
 // draw the sphere-confing box
 void boxDraw() {
