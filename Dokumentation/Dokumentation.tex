@@ -67,7 +67,7 @@ Um eine Kollision festzustellen, ist dies bei einer Ballkollision relativ einfac
 
 \begin{figure}[H]
 	\centering 
-	\includegraphics[width=0.8\textwidth]{collision-detection-6.png}  
+	\includegraphics[width=0.8\textwidth]{../data/collision-detection-6.png}  
 	\caption{Kollision  \cite{happycoding}} 
 	\label{Bild: Kollision}  
 \end{figure}
@@ -214,6 +214,20 @@ Ball (int count) {
 
 		\end{verbatim}
 		
+		\begin{figure}[H]
+			\centering 
+			\includegraphics[width=0.8\textwidth]{../data/earth.png}  
+			\caption{Earth Texture for Spheres} 
+			\label{Bild: Earth}  
+		\end{figure}
+		
+				\begin{figure}[H]
+			\centering 
+			\includegraphics[width=0.3\textwidth]{../data/Sphere.png}  
+			\caption{Earth Spheres} 
+			\label{Bild: Earth Sphere}  
+		\end{figure}
+		
 		
 
 		
@@ -234,7 +248,7 @@ Beispiel im Code:
 \begin{verbatim}
 	void bruteforce() {
 		for (int i = 0; i < ball.length; i++) {
-			for (int j = i + 1; j < ball.length; j++) {
+			for (int j = 0; j < ball.length; j++) {
 				...
 			}
 		}
@@ -248,8 +262,9 @@ Beispiel im Code:
 	
 	
 	
-	\subsection{Quad-Tree}
-	Vorteile gegenüber Bruteforce
+\subsection{Quadtree}
+Ein Quadtree oder Quaternärbaum ist in der Informatik eine Baumstruktur, in der jeder innere Knoten genau vier Kindknoten hat. \cite{Quadtree} Er wird häufig in der Computergrafik verwendet, um 2D-Räume effizient zu unterteilen. Im Vergleich zu einem Bruteforce bietet der Quadtree eine deutlich bessere Laufzeit, da die Komplexität bei Abfragen oder Einfügungen nur O(log(n)) beträgt. Obwohl der Quadtree eine bessere Leistung bietet, ist er komplexer in der Implementierung und Verwaltung.
+
 	
 	\section{Visualisierungen und Demonstrationen}
 	
@@ -290,7 +305,7 @@ Dieses Projekt sowie das Tool Processing bieten eine sehr gute Möglichkeit, Phy
 	
 	
 	\newpage
-\begin{thebibliography}{7}
+\begin{thebibliography}{8}
 	\bibitem{leifiphysik1}
 	\href{https://www.leifiphysik.de/mechanik/impulserhaltung-und-stoesse/grundwissen/zentraler-elastischer-stoss}{Leifi Physik: Zentraler elastischer Stoß}
 	\bibitem{happycoding}
@@ -304,7 +319,9 @@ Dieses Projekt sowie das Tool Processing bieten eine sehr gute Möglichkeit, Phy
 	\bibitem{processing}
 	\href{	https://processing.org/tutorials/pshape}{PShape}
 	\bibitem{Bruteforce}
-	\href{https://de.wikipedia.org/wiki/Brute-Force-Methode}{Bruteforce Methode}
+	\href{https://de.wikipedia.org/wiki/Brute-Force-Methode}{Bruteforce - Wikipedia}
+	\bibitem{Quadtree}
+	\href{https://de.wikipedia.org/wiki/Quadtree}{Quadtree - Wikipedia}
 	
 	
 
