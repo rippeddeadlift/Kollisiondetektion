@@ -1,6 +1,6 @@
 /**
  * Basic version of balls-project 
- * 	(no collision, no textures)
+ *   (no collision, no textures)
  */
 import ddf.minim.*;    // AudioPlayer, Minim
 CBalls theBalls;
@@ -69,7 +69,7 @@ void draw()
       text("Ball linksclick: +10% Masse, +5% Radius", 10, 600 + 2 * 25);
       text("Ball Rechtsclick: -10% Masse, -5% Radius", 10, 600 + 3 * 25);
     }
-    if(showModes) image(pg, 0, 0);
+    if(showModes) background(pg);
     if (noCollision) {
       startDrawingBallsAndPhysics();
   } else if (collision) {
@@ -92,9 +92,11 @@ void startDrawingBallsAndPhysics() {
   if (!forceFreeze)  
     theBalls.game_physics();
   if(drawVector){
+    vd = new VectorDrawer();
     vd.draw(theBalls);
   }
   if(makeEffet){
+    effet = new Effet(theBalls);
     effet.draw();
   }
   if(currentMode == Mode.TUNNELING){
