@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.10.22)  19 JAN 2025 01:22
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.10.22)  19 JAN 2025 20:52
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -311,11 +311,7 @@ File: l3backend-pdftex.def 2023-10-10 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count289
 \l__pdf_internal_box=\box55
 )
-(./Dokumentation.aux
-
-LaTeX Warning: Label `leifiphysik' multiply defined.
-
-)
+(./Dokumentation.aux)
 \openout1 = `Dokumentation.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 16.
@@ -336,7 +332,8 @@ LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 16.
 LaTeX Font Info:    ... okay on input line 16.
 LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 16.
 LaTeX Font Info:    ... okay on input line 16.
- (c:/texlive/2023/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+
+(c:/texlive/2023/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count290
 \scratchdimen=\dimen165
@@ -408,43 +405,39 @@ Overfull \hbox (1.37389pt too wide) in paragraph at lines 66--67
 all-kol-li-si-on re-la-tiv ein-fach. Daf[]ur ben[]otigen
  []
 
-<collision-detection-6.png, id=94, 608.2725pt x 420.82219pt>
+<collision-detection-6.png, id=99, 608.2725pt x 420.82219pt>
 File: collision-detection-6.png Graphic file (type png)
 <use collision-detection-6.png>
 Package pdftex.def Info: collision-detection-6.png  used on input line 70.
 (pdftex.def)             Requested size: 386.95897pt x 267.71355pt.
-[2] [3 <./collision-detection-6.png>] [4]
-Overfull \hbox (26.0528pt too wide) in paragraph at lines 147--149
+[2] [3 <./collision-detection-6.png>]
+Overfull \hbox (26.0528pt too wide) in paragraph at lines 146--148
 \OT1/cmr/m/n/12 lap") kom-men, da sich die Ob-jek-te zwi-schen den ein-zel-nen 
 Fra-mes wei-ter-be-we-gen. Die-se []Uberlappung
  []
 
-[5] [6] [7
-pdfTeX warning (ext4): destination with the same identifier (name{cite.leifiphy
-sik}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.256 \end{document}
-                    ] (./Dokumentation.aux)
+[4]
+Overfull \hbox (4.83357pt too wide) in paragraph at lines 195--196
+[]\OT1/cmr/m/n/12 In Pro-ces-sing sind die Sph[]aren ein-far-big. Da-mit wir nu
+n die Wir-kung se-hen k[]onnen, ben[]otigen
+ []
+
+[5] [6] [7] [8] (./Dokumentation.aux)
  ***********
 LaTeX2e <2023-06-01> patch level 1
 L3 programming layer <2023-10-10>
  ***********
-
-
-LaTeX Warning: There were multiply-defined labels.
-
 Package rerunfilecheck Info: File `Dokumentation.out' has not changed.
-(rerunfilecheck)             Checksum: 26B437A5AED34CBFBE9305114A2674CD;2711.
+(rerunfilecheck)             Checksum: 6254ABBAD99EB5EC7CA39C3935DCE6D0;2846.
  ) 
 Here is how much of TeX's memory you used:
- 10781 strings out of 474504
- 167765 string characters out of 5756725
+ 10790 strings out of 474504
+ 167898 string characters out of 5756725
  1931043 words of memory out of 5000000
- 32601 multiletter control sequences out of 15000+600000
+ 32605 multiletter control sequences out of 15000+600000
  565215 words of font info for 61 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,6n,79p,712b,585s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,6n,79p,712b,528s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/tex
 live/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2023
 /texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><c:/texlive/2023/texmf-di
@@ -456,10 +449,10 @@ pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><c:/te
 xlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb><c:/texlive/202
 3/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb><c:/texlive/2023/texmf-d
 ist/fonts/type1/public/cm-super/sfrm1200.pfb>
-Output written on Dokumentation.pdf (7 pages, 177423 bytes).
+Output written on Dokumentation.pdf (8 pages, 180994 bytes).
 PDF statistics:
- 202 PDF objects out of 1000 (max. 8388607)
- 165 compressed objects within 2 object streams
- 34 named destinations out of 1000 (max. 500000)
- 166 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 225 PDF objects out of 1000 (max. 8388607)
+ 187 compressed objects within 2 object streams
+ 39 named destinations out of 1000 (max. 500000)
+ 174 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -58,7 +58,7 @@ Für die Entwicklung des Projekts stand uns eine einfachere Version in Processin
 	
 	\section{Physikalische Grundlagen}
 	\subsection{Elastische Kollision}	
-	Wir bezeichnen einen Stoß dabei als elastisch, wenn die Summe der kinetischen Energien der Stoßpartner nach dem Stoß genau so groß ist wie vor dem Stoß. [1] \\
+	Wir bezeichnen einen Stoß dabei als elastisch, wenn die Summe der kinetischen Energien der Stoßpartner nach dem Stoß genau so groß ist wie vor dem Stoß. \cite{leifiphysik1}~ \\
 	Das bedeutet für uns, dass keine kinetische Energie in andere Energieformen wie Wärme oder Verformungsenergie umgewandelt wird. Ein klassisches Beispiel für eine nahezu elastische Kollision ist der Zusammenstoß von Billardkugeln: Nach dem Stoß bewegen sich die Kugeln mit nahezu unveränderter kinetischer Energie weiter.\\ Im Gegensatz dazu steht die unelastische Kollision, bei der ein Teil der kinetischen Energie in andere Energieformen umgewandelt wird, was oft zu einer dauerhaften Verformung der Objekte führt. Ein typisches Beispiel hierfür ist ein Autounfall, bei dem die kinetische Energie in Verformungsenergie umgewandelt wird, was zu Schäden am Fahrzeug führt.
 	
 	\vspace{0.5cm}
@@ -68,16 +68,15 @@ Um eine Kollision festzustellen, ist dies bei einer Ballkollision relativ einfac
 \begin{figure}[H]
 	\centering 
 	\includegraphics[width=0.8\textwidth]{collision-detection-6.png}  
-	\caption{Kollision} 
+	\caption{Kollision  \cite{happycoding}} 
 	\label{Bild: Kollision}  
 \end{figure}
 
-\newpage
 
 Die Formel zur Berechnung der Distanz zwischen den Punkten \( (x_1) \) und \( (x_2) \) lautet:
 
 \[
-\text{Abstand} = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2} [3]
+\text{Abstand} = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2} \cite{serlo}~
 \]
 
 Im Code wird dies wie folgt umgesetzt:
@@ -162,10 +161,10 @@ Im Code wird dies wie folgt umgesetzt:
 		
 		\subsection{Effet}
 		
-		Als Effet (franz. Wirkung) bezeichnet man den Drall eines Balls bzw. einer Kugel. [4] Es handelt sich um einen visuellen Effekt, mit dem man feststellen kann, dass sich ein Objekt dreht. Die Rotation des Balls ergibt sich aus seiner Geschwindigkeit und seinem Radius.
+		Als Effet (franz. Wirkung) bezeichnet man den Drall eines Balls bzw. einer Kugel. \cite{Wiki}~ Es handelt sich um einen visuellen Effekt, mit dem man feststellen kann, dass sich ein Objekt dreht. Die Rotation des Balls ergibt sich aus seiner Geschwindigkeit und seinem Radius.
 		
 \[
-\text{w} = \frac{\text{v}}{\text{r}} [5]
+\text{w} = \frac{\text{v}}{\text{r}} \cite{leifiphysik2}~
 \]
 
 		
@@ -193,27 +192,81 @@ Im Code wird dies wie folgt umgesetzt:
 			}..}
 		\end{verbatim}
 		
-		Grundsätzlich sind die Sphären in Processing einfarbig. Im Rahmen dieser Veranstaltung haben wir eine weitere, kleinere Sphäre an den Koordinaten der ursprünglichen Sphäre positioniert, um das Drehmoment zu beobachten.		
+		In Processing sind die Sphären einfarbig. Damit wir nun die Wirkung sehen können, benötigen wir die Klasse \texttt{PShape}, mit der wir einen beliebig geformten Körper erstellen können, und die Klasse \texttt{PImage}, die uns das Bild speichert. Mit der Methode \texttt{setTexture(image)} laden wir die Textur auf unseren Körper \cite{processing}.
 		
+		
+		
+			\vspace{0.5cm}
+		Beispiel im Code:
+		
+		\begin{verbatim}
+PShape our_sphere;
+PImage texture = loadImage("rainbow-square.png");
+
+
+Ball (int count) {
+	..
+	our_sphere = createShape(SPHERE, this.Radius());
+	our_sphere.setStroke(false);
+	our_sphere.setTexture(texture);
+	..
+}
+
+		\end{verbatim}
+		
+		
+
 		
 	
 	\section{Algorithmen zur Kollisionsdetektion}
 	
-	\subsection{Bruteforce}
-	Vor- und Nachteile
+\subsection{Bruteforce}
+
+Die Brute-Force-Methode (von englisch brute force ‚rohe Gewalt‘) \cite{Bruteforce} ist einer der bekanntesten Suchalgorithmen in der Informatik. Sie ist bekannt für ihre einfache Implementierung, bringt jedoch auch Nachteile mit sich. Bei großen Datenmengen ist dieser Algorithmus mit seiner Laufzeit von  O(n²) einer der langsamsten Algorithmen.
+
+\subsubsection{Funktion}
+
+Die Implementierung ist unkompliziert: Für jeden Ball, den wir betrachten, prüfen wir alle anderen Bälle und führen die gewünschten Operationen aus.
+
+\vspace{0.5cm}
+Beispiel im Code:
+
+\begin{verbatim}
+	void bruteforce() {
+		for (int i = 0; i < ball.length; i++) {
+			for (int j = i + 1; j < ball.length; j++) {
+				...
+			}
+		}
+	}
+\end{verbatim}
+	
+	
+	
+	
+	
+	
+	
+	
 	\subsection{Quad-Tree}
 	Vorteile gegenüber Bruteforce
 	
 	\section{Visualisierungen und Demonstrationen}
 	
-	\subsection{Vektorenrichtung Drawer}
+	\subsection{Vektorenrichtungs-Darstellung}
+	
+	Der Effekt kann mit der Taste \texttt{v} ein- und ausgeschaltet werden.  
+	Hier werden Pfeile in Laufrichtung gezeichnet, sodass der Benutzer die Bewegungsrichtung der Bälle leicht nachvollziehen kann.  
+		
 	
 	\subsection{Tunneling-Demonstration}
 	
 	
 	\subsection{Impuls-Demonstration}
-In dieser Demonstration hat der Benutzer die Möglichkeit, per Mausklick die Masse der Bälle zu steuern.  
-Mit einer größeren Masse, wächst auch der Radius. 
+	
+	Der Modus kann mit der Taste \texttt{3} eingeschaltet werden. 
+	In diesem Modus hat der Benutzer die Möglichkeit, per Mausklick die Masse der Bälle zu steuern. 
+	Mit einer größeren Masse, wächst auch der Radius. 
 \begin{itemize}
 	\item Linksklick: \texttt{+10\%} Masse, \texttt{+5\%} Radius  
 	\item Rechtsklick: \texttt{-10\%} Masse, \texttt{-5\%} Radius  
@@ -221,7 +274,7 @@ Mit einer größeren Masse, wächst auch der Radius.
 
 Durch den direkten Einfluss auf die Masse kann der Benutzer beobachten, wie sich der Impuls bei Kollisionen mit Bällen verhält, die mehr oder weniger Masse haben.  
 
-Der Radius hat ebenfalls einen Einfluss auf den \emph{Effet} Effekt, da eine größere Radiusgröße zu einer langsameren Rotation führt.
+Der Radius hat ebenfalls einen Einfluss auf den Effet Effekt, da eine größere Radiusgröße zu einer langsameren Rotation führt.
 
 	
 	
@@ -237,8 +290,8 @@ Dieses Projekt sowie das Tool Processing bieten eine sehr gute Möglichkeit, Phy
 	
 	
 	\newpage
-\begin{thebibliography}{5}
-	\bibitem{leifiphysik}
+\begin{thebibliography}{7}
+	\bibitem{leifiphysik1}
 	\href{https://www.leifiphysik.de/mechanik/impulserhaltung-und-stoesse/grundwissen/zentraler-elastischer-stoss}{Leifi Physik: Zentraler elastischer Stoß}
 	\bibitem{happycoding}
 	\href{https://happycoding.io/tutorials/processing/collision-detection}{Happy Coding: Collision Detection Tutorial}
@@ -246,8 +299,14 @@ Dieses Projekt sowie das Tool Processing bieten eine sehr gute Möglichkeit, Phy
 	\href{https://de.serlo.org/mathe/1783/abstand-zweier-punkte-berechnen}{Serlo: Abstand zweier Punkte berechnen}
 	\bibitem{Wiki}
 	\href{https://de.wikipedia.org/wiki/Effet}{Effet - Wikipedia}
-		\bibitem{leifiphysik}
+	\bibitem{leifiphysik2}
 	\href{	https://www.leifiphysik.de/mechanik/kreisbewegung/grundwissen/bahngeschwindigkeit-und-winkelgeschwindigkeit}{Bahngeschwindigkeit und Winkelgeschwindigkeit}
+	\bibitem{processing}
+	\href{	https://processing.org/tutorials/pshape}{PShape}
+	\bibitem{Bruteforce}
+	\href{https://de.wikipedia.org/wiki/Brute-Force-Methode}{Bruteforce Methode}
+	
+	
 
 \end{thebibliography}
 
