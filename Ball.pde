@@ -14,8 +14,7 @@ public class Ball
   float angleY = 0;
   boolean makeEffet = false;
   PShape our_sphere;
-  PImage texture = loadImage("textur.png");
-  PImage texture2 = loadImage("rainbow-square.png");
+  PImage texture = loadImage("earth.png");
   boolean mousedown   = false;
 
   Ball (int count) {
