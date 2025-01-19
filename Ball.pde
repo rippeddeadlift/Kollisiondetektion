@@ -1,9 +1,3 @@
-/**
- * Class for a single ball, contains game physics, boundary reflections
- * and audio effects:
- *    (i)   a 'kick' sound when hitting the floor
- *    (ii)  a 'snare' sound when hitting one of the other three walls
- */
 public class Ball
 {
   double DT = 0.06;	// time increment
@@ -19,7 +13,6 @@ public class Ball
   float angleX = 0; 
   float angleY = 0;
   boolean makeEffet = false;
-         
 
   boolean mousedown   = false;
 
