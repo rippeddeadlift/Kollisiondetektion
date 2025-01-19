@@ -4,13 +4,13 @@ public class VectorDrawer {
   PVector acceleration;
  
   public void draw(CBalls balls) {
-    for (int i = 0; i < balls.ball.length; i++) {
+    for (Ball ball : balls.balls) {
       stroke(#00FF00);
       strokeWeight(2.5);
-      position = new PVector((float)balls.ball[i].sx, (float)balls.ball[i].sy);
-      velocity = new PVector((float)balls.ball[i].vx, (float)balls.ball[i].vy);
+      position = new PVector((float)ball.sx, (float)ball.sy);
+      velocity = new PVector((float)ball.vx, (float)ball.vy);
       
-      PVector direction = velocity.copy().normalize().mult((float)balls.ball[i].radius);
+      PVector direction = velocity.copy().normalize().mult((float)ball.radius);
       PVector start = PVector.add(position, direction);
       
       drawArrow(start.x, start.y, start.x + velocity.x, start.y + velocity.y);

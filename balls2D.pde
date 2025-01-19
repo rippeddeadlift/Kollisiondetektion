@@ -5,7 +5,7 @@
 import ddf.minim.*;    // AudioPlayer, Minim
 CBalls theBalls;
 VectorDrawer vd;
-int totalball = 5;               // number of balls 
+int totalball = 2;               // number of balls 
 PFont mono;
 Effet effet;
 boolean showHelp=false;          // toggle help text
@@ -19,8 +19,7 @@ boolean makeEffet = false;
 //modes
 TunnelingDemo tunnelingDemo = new TunnelingDemo();
 Mode currentMode = Mode.NOCOLLISION;
-PGraphics pg;
-
+PGraphics pg; 
 
 color c_red = color(255,0,0);
 float leftwall_x  = 0;
@@ -33,16 +32,15 @@ Minim minim;
 
 void setup() 
 {
-  size(700, 700, P3D);            
+  size(700, 700, P3D);
+  frameRate(50);
   theBalls = new CBalls(totalball);
   vd = new VectorDrawer();
   effet = new Effet(theBalls);
   rightwall_x = width;
   floor_y     = height;
   mid_x = width/2.0;
-
   mono = createFont("Cascadia Code", 22);
-  frameRate(50);
   pg = createGraphics(width, height);
   pg.beginDraw();
   pg.textFont(mono);
@@ -153,6 +151,9 @@ void keyPressed()
   case 'h':
     showModes = !showModes;
     break;
+  case 'q':
+    addBall();
+    break;
   case 'r':
     randomFloor = !randomFloor; 
     if ( randomFloor) println("State: random floor ON"); 
@@ -171,24 +172,30 @@ void activateMode(Mode mode) {
   switch(mode){
     case NOCOLLISION:
       currentMode = Mode.NOCOLLISION;
-      theBalls = new CBalls(totalball);
       break;
     case COLLISION:
       currentMode = Mode.COLLISION;
-      theBalls = new CBalls(totalball);
       break;
     case IMPULSE:
       currentMode = Mode.IMPULSE;
-      theBalls = new CBalls(totalball);
       break;
     case TUNNELING:
       currentMode = Mode.TUNNELING;
       theBalls = new CBalls(1);
       tunnelingDemo.init(theBalls);
       break;
- 
 }}
 
+void toggleAlgorithm(){
+  theBalls.useQuadTree = !theBalls.useQuadTree;
+}
+
+void addBall(){
+  if(currentMode != Mode.TUNNELING){
+    Ball ball = new Ball(0, true);
+    theBalls.add(ball);
+  }
+}
 
 void mousePressed(){
   theBalls.Mouse();
