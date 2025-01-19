@@ -14,7 +14,7 @@ public class TunnelingDemo{
     this.ball = ballContainer.ball[0];
     ball.vx = 0;
     ball.sx = width/2;
-    frameRate(60);
+    frameRate(50);
     draw();
   }
   void draw(){
