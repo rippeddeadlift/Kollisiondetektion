@@ -94,37 +94,6 @@ void startDrawingBallsAndPhysics() {
   }
 }
 
-void setupLighting() {
-    lightSpecular(255, 255, 255);
-    directionalLight(204, 204, 204, 0, +1, -1);
-}
-
-void drawScene() {
-    translate(0, 0, -2); // Optional, just to show the box border
-    boxDraw();
-    theBalls.draw();
-}
-
-void handlePhysics() {
-    if (!forceFreeze) {
-        theBalls.game_physics();
-    }
-}
-
-void handleOptionalEffects() {
-    if (drawVector) {
-        VectorDrawer vd = new VectorDrawer();
-        vd.draw(theBalls);
-    }
-    if (makeEffet && !forceFreeze) {
-        Effet effet = new Effet(theBalls);
-        effet.draw();
-    }
-    if (currentMode == Mode.TUNNELING) {
-        tunnelingDemo.draw();
-    }
-}
-
 // draw the sphere-confing box
 void boxDraw() {
     stroke(c_red);
@@ -199,12 +168,15 @@ void activateMode(Mode mode) {
   switch(mode){
     case NOCOLLISION:
       currentMode = Mode.NOCOLLISION;
+      frameRate(50);
       break;
     case COLLISION:
       currentMode = Mode.COLLISION;
+      frameRate(50);
       break;
     case IMPULSE:
       currentMode = Mode.IMPULSE;
+      frameRate(50);
       break;
     case TUNNELING:
       currentMode = Mode.TUNNELING;
