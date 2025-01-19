@@ -14,19 +14,36 @@ public class Ball
   float angleY = 0;
   boolean makeEffet = false;
   PShape our_sphere;
-  PImage texture = loadImage("rainbow-square.png");
+  PImage texture = loadImage("textur.png");
+  PImage texture2 = loadImage("rainbow-square.png");
   boolean mousedown   = false;
 
   Ball (int count) {
-    this.radius=0.4f*60;
+    this.radius=0.4f*70;
     this.bn=count;
     // we initialize with increasingly more negative 'times'
     // >> the balls pop up one after another:
     this.times=-10*DT*count;
     this.vy=random(50);
-    this.sy=+50;
+    this.sy=random(height);
     this.vx=random(50);
-    this.sx=100;
+    this.sx=random(width);
+    our_sphere = createShape(SPHERE, this.Radius());
+    our_sphere.setStroke(false);
+    our_sphere.setTexture(texture);
+    noStroke();
+  }
+  
+  Ball (int count, boolean spawnOnMousePosition) {
+    this.radius=0.4f*70;
+    this.bn=count;
+    // we initialize with increasingly more negative 'times'
+    // >> the balls pop up one after another:
+    this.times=-10*DT*count;
+    this.vy=random(50);
+    this.sy=mouseY;
+    this.vx=random(50);
+    this.sx=mouseX;
     our_sphere = createShape(SPHERE, this.Radius());
     our_sphere.setStroke(false);
     our_sphere.setTexture(texture);
@@ -62,7 +79,7 @@ public class Ball
      println("dx,dy = "+ dx+", "+dy);
      */
   }
-
+ 
   void accumulateForces() {
     double Fx = 0;
     double Fy = MASS*g_acc;

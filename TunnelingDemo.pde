@@ -15,7 +15,7 @@ public class TunnelingDemo{
   public void init(CBalls ballContainer){
     this.active = true;
     this.ballContainer = ballContainer;
-    this.ball = ballContainer.ball[0];
+    this.ball = ballContainer.balls.get(0);
     ball.vx = 0;
     ball.sx = width/2;
     frameRate(60);

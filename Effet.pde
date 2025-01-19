@@ -6,16 +6,16 @@ public class Effet {
     }
 
     public void draw() {
-        for (int i = 0; i < cBalls.ball.length; i++) {
-            cBalls.ball[i].makeEffet = true; 
-            cBalls.ball[i].angleX += cBalls.ball[i].vx * 0.07 / cBalls.ball[i].radius;
-            cBalls.ball[i].angleY += cBalls.ball[i].vy * 0.07 / cBalls.ball[i].radius;  
+        for (Ball ball : cBalls.balls) {
+            ball.makeEffet = true; 
+            ball.angleX += ball.vx * 0.07 / ball.radius;
+            ball.angleY += ball.vy * 0.07 / ball.radius;  
         }
     }
 
     public void resetBallFlags() {
-        for (int i = 0; i < cBalls.ball.length; i++) {
-            cBalls.ball[i].makeEffet = false;  
+        for (Ball ball : cBalls.balls) {
+            ball.makeEffet = false;  
         }
     }
 }

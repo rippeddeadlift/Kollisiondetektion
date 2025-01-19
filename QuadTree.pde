@@ -3,23 +3,26 @@ class Quadtree {
   ArrayList<Ball> balls;
   boolean divided;
   PVector position;
-  float width, height;
+  float width_, height_;
   Quadtree northeast, northwest, southeast, southwest;
+  PShape square;
 
   Quadtree(float x, float y, float w, float h, int n) {
     position = new PVector(x, y);
-    width = w;
-    height = h;
+    width_ = w;
+    height_ = h;
     capacity = n;
     balls = new ArrayList<Ball>();
     divided = false;
+    //square = createShape(RECT, 0, 0, width_, height_);
+    //square.setStroke(color(255,0,0));
   }
 
-  void subdivide() {
+  void subdivide() { //<>// //<>//
     float x = position.x;
     float y = position.y;
-    float w = width / 2;
-    float h = height / 2;
+    float w = width_ / 2;
+    float h = height_ / 2;
     northeast = new Quadtree(x + w, y, w, h, capacity);
     northwest = new Quadtree(x, y, w, h, capacity);
     southeast = new Quadtree(x + w, y + h, w, h, capacity);
@@ -29,17 +32,21 @@ class Quadtree {
 
   boolean insert(Ball b) {
     if (!contains(b)) {
+      println("!contains(b)");
       return false;
     }
 
-    if (balls.size() < capacity) {
+    if (balls.size() < capacity) { //<>// //<>//
       balls.add(b);
+      println("Add to quadtree");
       return true;
     } else {
       if (!divided) {
+        println("need to subdivide");
         subdivide();
       }
       if (northeast.insert(b) || northwest.insert(b) || southeast.insert(b) || southwest.insert(b)) {
+        println("inserted into subtree");
         return true;
       }
     }
@@ -47,8 +54,8 @@ class Quadtree {
   }
 
   boolean contains(Ball b) {
-    return (b.sx >= position.x - width && b.sx < position.x + width &&
-            b.sy >= position.y - height && b.sy < position.y + height);
+    return (b.sx >= position.x - width_ && b.sx < position.x + width_ &&
+            b.sy >= position.y - height_ && b.sy < position.y + height_);
   }
 
   ArrayList<Ball> query(PVector rangePos, float rangeW, float rangeH) {
@@ -61,7 +68,6 @@ class Quadtree {
     for (Ball b : balls) {
       if (b.sx >= rangePos.x - rangeW && b.sx < rangePos.x + rangeW &&
           b.sy >= rangePos.y - rangeH && b.sy < rangePos.y + rangeH) {
-            b.ballColor = color(255,255,255);
         found.add(b);
       }
     }
@@ -77,16 +83,15 @@ class Quadtree {
   }
 
   boolean intersects(PVector rangePos, float rangeW, float rangeH) {
-    return !(rangePos.x - rangeW > position.x + width || rangePos.x + rangeW < position.x - width ||
-             rangePos.y - rangeH > position.y + height || rangePos.y + rangeH < position.y - height);
+    return !(rangePos.x - rangeW > position.x + width_ || rangePos.x + rangeW < position.x - width_ ||
+             rangePos.y - rangeH > position.y + height_ || rangePos.y + rangeH < position.y - height_);
   }
 
   void show() {
-    stroke(#00FF00);
-    print("shoulddraw");
+    stroke(color(255,255,0));
     noFill();
-    print(width,height);
-    rect(position.x, position.y, width, height);
+    //shape(square,position.x,position.y);
+    rect(position.x, position.y, width_, height_);
     if (divided) {
       northeast.show();
       northwest.show();

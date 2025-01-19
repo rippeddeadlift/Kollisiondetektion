@@ -5,7 +5,7 @@
 import ddf.minim.*;    // AudioPlayer, Minim
 CBalls theBalls;
 VectorDrawer vd;
-int totalball = 5;               // number of balls 
+int totalball = 2;               // number of balls 
 PFont mono;
 Effet effet;
 boolean showHelp=false;          // toggle help text
@@ -17,13 +17,9 @@ boolean drawVector = false;
 boolean makeEffet = false;
 
 //modes
-boolean noCollision = true;
-boolean collision = false;
-boolean impulsMasse = false;
 TunnelingDemo tunnelingDemo = new TunnelingDemo();
 Mode currentMode = Mode.NOCOLLISION;
-PGraphics pg;
-
+PGraphics pg; 
 
 color c_red = color(255,0,0);
 float leftwall_x  = 0;
@@ -32,27 +28,24 @@ float rightwall_x;
 float floor_y;
 float mid_x;
 
-Minim minim; 
-
 void setup() 
 {
-  size(700, 700, P3D);            
+  size(700, 700, P3D);
+  frameRate(50);
   theBalls = new CBalls(totalball);
   vd = new VectorDrawer();
   effet = new Effet(theBalls);
   rightwall_x = width;
   floor_y     = height;
   mid_x = width/2.0;
-
   mono = createFont("Cascadia Code", 22);
-  frameRate(50);
   pg = createGraphics(width, height);
   pg.beginDraw();
   pg.textFont(mono);
   pg.fill(255, 255, 255);
   pg.text("1: Root Mode / Normalmode ", 10, 35);
   pg.text("2: Kollisiondetektion", 10, 35 + 1 * 25);
-  pg.text("3: Impuls / Masse", 10, 35 + 2 * 25);
+  pg.text("3: Impuls Demonstration", 10, 35 + 2 * 25);
   pg.text("4: Tunneling Demonstration", 10, 35 + 3 * 25);
   pg.text("e: Effet ",400,35);
   pg.text("v: VectorDrawer",400,35+1*25);
@@ -62,26 +55,43 @@ void setup()
 void draw() 
 {
     background(80);  // gray background 
-    if(impulsMasse){
-      textFont(mono);
-      fill(255, 255, 255);
-      text("Ball linksclick: +10% Masse, +5% Radius", 10, 600 + 2 * 25);
-      text("Ball Rechtsclick: -10% Masse, -5% Radius", 10, 600 + 3 * 25);
-    }
     if(showModes) background(pg);
     startDrawingBallsAndPhysics();
-    if (!forceFreeze && (collision || impulsMasse)) {
-        theBalls.detectCollisions();
-    }
-    if (impulsMasse) {
+    switch(currentMode){
+      case TUNNELING:
+        tunnelingDemo.draw();
+        break;
+      case NOCOLLISION:
+        break;
+      case COLLISION:
+        if(!forceFreeze) theBalls.detectCollisions();
+        break;
+      case IMPULSE:
+        if(!forceFreeze) theBalls.detectCollisions();
         theBalls.impulsMasse = true;
+        textFont(mono);
+        fill(255, 255, 255);
+        text("Ball linksclick: +10% Masse, +5% Radius", 10, 600 + 2 * 25);
+        text("Ball Rechtsclick: -10% Masse, -5% Radius", 10, 600 + 3 * 25);
+        break;  
     }
 }
 void startDrawingBallsAndPhysics() {
-    setupLighting();
-    drawScene();
-    handlePhysics();
-    handleOptionalEffects();
+  lightSpecular(255,255,255);
+  directionalLight(204, 204, 204, 0, +1, -1);
+  translate(0,0,-2);    // optional, just to show the box border
+  boxDraw();
+  theBalls.draw();
+  if (!forceFreeze)  
+    theBalls.game_physics();
+  if(drawVector){
+    vd = new VectorDrawer();
+    vd.draw(theBalls);
+  }
+  if(makeEffet){
+    effet = new Effet(theBalls);
+    effet.draw();
+  }
 }
 
 void setupLighting() {
@@ -168,6 +178,9 @@ void keyPressed()
   case 'h':
     showModes = !showModes;
     break;
+  case 'q':
+    addBall();
+    break;
   case 'r':
     randomFloor = !randomFloor; 
     if ( randomFloor) println("State: random floor ON"); 
@@ -181,41 +194,35 @@ void keyPressed()
   }
 }
 
-void restart() {
-}
-
-
 void activateMode(Mode mode) {
-
-  noCollision = false;
-  collision = false;
-  impulsMasse = false;
   theBalls.impulsMasse = false;
   switch(mode){
     case NOCOLLISION:
-      noCollision = true;
-      theBalls = new CBalls(totalball);
-      tunnelingDemo.close();
+      currentMode = Mode.NOCOLLISION;
       break;
     case COLLISION:
-      collision = true;
-      theBalls = new CBalls(totalball);
-      tunnelingDemo.close();
+      currentMode = Mode.COLLISION;
       break;
     case IMPULSE:
-      impulsMasse = true;
-      theBalls = new CBalls(totalball);
-      tunnelingDemo.close();
+      currentMode = Mode.IMPULSE;
       break;
     case TUNNELING:
-      collision = true;
+      currentMode = Mode.TUNNELING;
       theBalls = new CBalls(1);
       tunnelingDemo.init(theBalls);
-      currentMode = Mode.TUNNELING;
       break;
- 
 }}
 
+void toggleAlgorithm(){
+  theBalls.useQuadTree = !theBalls.useQuadTree;
+}
+
+void addBall(){
+  if(currentMode != Mode.TUNNELING){
+    Ball ball = new Ball(0, true);
+    theBalls.add(ball);
+  }
+}
 
 void mousePressed(){
   theBalls.Mouse();
