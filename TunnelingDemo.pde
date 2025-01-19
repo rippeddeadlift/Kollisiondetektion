@@ -59,13 +59,13 @@ public class TunnelingDemo{
     pgHigh.beginDraw();
     pgHigh.textFont(mono);
     pgHigh.fill(255, 0, 0);
-    pgHigh.text(HIGH_FPS_HINT_TEXT, 10, 35);
+    pgHigh.text(HIGH_FPS_HINT_TEXT, 35,650 );
     pgHigh.endDraw();
 
     pgLow.beginDraw();
     pgLow.textFont(mono);
     pgLow.fill(255, 0, 0);
-    pgLow.text(LOW_FPS_HINT_TEXT, 10, 35);
+    pgLow.text(LOW_FPS_HINT_TEXT, 35, 650);
     pgLow.endDraw();
   }
   
