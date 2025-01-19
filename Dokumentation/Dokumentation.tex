@@ -2,13 +2,12 @@
 \usepackage{graphicx}
 \usepackage[german]{babel}
 \usepackage{float}
+\usepackage{hyperref}
+\usepackage{amsmath}
 
 
-
-
-
-%\usepackage{geometry}
-%\geometry{a4paper, margin=2cm}
+\usepackage{geometry}
+\geometry{a4paper, margin=2cm}
 
 \title{Dokumentation: Kollisionsdetektion, WPF-Projekt in SSDS}
 \author{Ivan Kurilin \and Dimitrij Pivovar}
@@ -68,17 +67,41 @@ Um eine Kollision festzustellen, ist dies bei einer Ballkollision relativ einfac
 
 \begin{figure}[H]
 	\centering 
-	\includegraphics[width=0.8\textwidth]{collision-detection-6.png}  % Adjust the width as needed
+	\includegraphics[width=0.8\textwidth]{collision-detection-6.png}  
 	\caption{Kollision} 
 	\label{Bild: Kollision}  
 \end{figure}
 
+\newpage
+
+Die Formel zur Berechnung der Distanz zwischen den Punkten \( (x_1) \) und \( (x_2) \) lautet:
+
+\[
+\text{Abstand} = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2} [3]
+\]
+
+Im Code wird dies wie folgt umgesetzt:
+
+\begin{verbatim}
+	float dx = (float)(b1.sx - b2.sx);
+	float dy = (float)(b1.sy - b2.sy);
+	float distance = (float)Math.sqrt(dx * dx + dy * dy);
+\end{verbatim}
 
 
-	
-	
-		\subsection{Impuls und Impulserhaltungssatz}
-		Die folgende Gleichung, bekannt als Impulserhaltungsgesetz stellt die Erhaltung der kinetischen Energie bei einem elastischen Stoß zwischen zwei Körpern dar.
+
+
+
+\subsection{Impuls und Impulserhaltungssatz}
+
+Impuls bezeichnet das Produkt aus der Masse eines Objekts und seiner Geschwindigkeit. Es handelt sich um eine Vektorgröße, die sowohl eine Richtung als auch eine Größe hat. Der Impuls eines Objekts bleibt nach einer elastischen Kollision erhalten, was bedeutet, dass die Gesamtimpulsmenge vor und nach der Kollision gleich bleibt.\\
+Bei der Kollision zweier gleichmäßiger Objekte bleibt der Gesamtimpuls des Systems erhalten. Das bedeutet, dass die Summe der Impulse der beiden Objekte vor der Kollision gleich der Summe der Impulse nach der Kollision ist.\\
+Wenn ein Objekt mit größerem Impuls auf ein Objekt mit kleinerem Impuls trifft, wird ein Teil des Impulses des ersten Objekts auf das zweite Objekt übertragen. Dies führt zu einer Änderung der Geschwindigkeiten beider Objekte, jedoch bleibt der Gesamtimpuls der Objekte unverändert.
+
+
+	\vspace{0.5cm}
+
+Die folgende Gleichung, bekannt als Impulserhaltungsgesetz stellt die Erhaltung der kinetischen Energie bei einem elastischen Stoß zwischen zwei Körpern dar.
 		
 		\[
 		m_1 v_1^2 +  m_2 v_2^2 =  m_1 v_1'^2 +  m_2 v_2'^2
@@ -89,7 +112,90 @@ Um eine Kollision festzustellen, ist dies bei einer Ballkollision relativ einfac
 			\item \( v_1 \) und \( v_2 \) sind die Geschwindigkeiten der Körper vor dem Stoß.
 			\item \( v_1' \) und \( v_2' \) sind die Geschwindigkeiten der Körper nach dem Stoß.
 		\end{itemize}
+		\vspace{0.5cm}
+		
+		
+		Da wir nun wissen, dass der Gesamtimpuls der beiden objekten nach der Kollision gleich ist, können wir den Impuls, der zwischen den beiden Objekten während der Kollision übertragen wird, berechnen. Dazu berechnen wir zunächst das Skalarprodukt, das die relative Geschwindigkeit entlang der Kollisionsachse angibt. Wir teilen dieses Skalarprodukt durch die Summe der Massen der beiden Objekte, um den Impuls zu berechnen, der auf jedes Objekt übertragen wird. Dieser Impuls wird dann auf die Geschwindigkeiten der Objekte angewendet.
+		
+		 \[Skalararprodukt:
+		\vec{a} \cdot \vec{b} = a_x b_x + a_y b_y 
+		\]
+		
+Beispiel aus dem Code:
+
+		\begin{verbatim}
+			float nx = dx / distance;
+			float ny = dy / distance;
+			float dvx = (float)(b1.vx - b2.vx);
+			float dvy = (float)(b1.vy - b2.vy);
+			float skalarprodukt = dvx * nx + dvy * ny;
+			
+			if (skalarprodukt <= 0){
+				
+				float impuls = 2* skalarprodukt / (float)(b1.MASS + b2.MASS);
+				
+				b1.vx -= impuls * b2.MASS * nx;
+				b1.vy -= impuls * b2.MASS * ny;
+				b2.vx += impuls * b1.MASS * nx;
+				b2.vy += impuls * b1.MASS * ny;
+			};
+		\end{verbatim}
+		
+		
+		\subsection{Überlappung}
+		
+In der Computergrafik kann es bei Kollisionen zu einer sogenannten Überlappung (engl. "Overlap") kommen, da sich die Objekte zwischen den einzelnen Frames weiterbewegen. Diese Überlappung wird durch die Kollisionserkennung festgestellt und kann durch Anpassung der Positionen der beteiligten Objekte korrigiert werden, sodass sie nicht mehr übereinander liegen.
+	\vspace{0.5cm}
+		
+Im Code wird dies wie folgt umgesetzt:
+\begin{verbatim}
+    float overlap =  (distance - (b1.Radius() + b2.Radius()));
+    
+    if (overlap < 0){
+    	b1.sx -= overlap * (b1.sx - b2.sx) / distance;
+    	b1.sy -= overlap * (b1.sy - b2.sy) / distance;
+    	b2.sx += overlap * (b1.sx - b2.sx) / distance;
+    	b2.sy += overlap * (b1.sy - b2.sy) / distance;
+    }
+\end{verbatim}
+		
+		
 		\subsection{Effet}
+		
+		Als Effet (franz. Wirkung) bezeichnet man den Drall eines Balls bzw. einer Kugel. [4] Es handelt sich um einen visuellen Effekt, mit dem man feststellen kann, dass sich ein Objekt dreht. Die Rotation des Balls ergibt sich aus seiner Geschwindigkeit und seinem Radius.
+		
+\[
+\text{w} = \frac{\text{v}}{\text{r}} [5]
+\]
+
+		
+		Im Code wird dies wie folgt umgesetzt:
+		
+		\begin{verbatim}
+			cBalls.ball[i].angleX += cBalls.ball[i].vx * 0.1 / cBalls.ball[i].radius;
+			cBalls.ball[i].angleY += cBalls.ball[i].vy * 0.1 / cBalls.ball[i].radius;
+		\end{verbatim}
+		
+		
+		Letzendlich muss der Winkel des Balls kontinuierlich angepasst werden. Dies erfolgt in Processing in der fortlaufenden \texttt{draw()} Methode:
+		
+		\begin{verbatim}
+			public class Ball
+			{..
+			 void draw() {
+				if (times >= 0) {
+				..
+					rotateX(angleX);     
+					rotateY(angleY);      
+					
+				..
+				}
+			}..}
+		\end{verbatim}
+		
+		Grundsätzlich sind die Sphären in Processing einfarbig. Im Rahmen dieser Veranstaltung haben wir eine weitere, kleinere Sphäre an den Koordinaten der ursprünglichen Sphäre positioniert, um das Drehmoment zu beobachten.		
+		
+		
 	
 	\section{Algorithmen zur Kollisionsdetektion}
 	
@@ -106,17 +212,45 @@ Um eine Kollision festzustellen, ist dies bei einer Ballkollision relativ einfac
 	
 	
 	\subsection{Impuls-Demonstration}
-	
-	\subsection{Effet}
-	
-	\section{Fazit }
-	\section{Quellen}
-	[1]: https://www.leifiphysik.de/mechanik/impulserhaltung-und-stoesse/grundwissen/zentraler-elastischer-stoss
-	[2]: https://happycoding.io/tutorials/processing/collision-detection
+In dieser Demonstration hat der Benutzer die Möglichkeit, per Mausklick die Masse der Bälle zu steuern.  
+Mit einer größeren Masse, wächst auch der Radius. 
+\begin{itemize}
+	\item Linksklick: \texttt{+10\%} Masse, \texttt{+5\%} Radius  
+	\item Rechtsklick: \texttt{-10\%} Masse, \texttt{-5\%} Radius  
+\end{itemize}
+
+Durch den direkten Einfluss auf die Masse kann der Benutzer beobachten, wie sich der Impuls bei Kollisionen mit Bällen verhält, die mehr oder weniger Masse haben.  
+
+Der Radius hat ebenfalls einen Einfluss auf den \emph{Effet} Effekt, da eine größere Radiusgröße zu einer langsameren Rotation führt.
 
 	
 	
+	\subsection{Effet}
 	
+	Der Effet Effekt, wie schon oben beschrieben, zeigt uns die Rotation. Dieser Effekt kann im gesamten Programm mit der Taste \texttt{E} ein- und ausgeschaltet werden.
+	
+	\section{Fazit}
+	
+Dieses Projekt sowie das Tool Processing bieten eine sehr gute Möglichkeit, Physik auf anschauliche Weise für Studierende zu demonstrieren. Durch die verschiedenen Projekte und eine spielerische Herangehensweise können vordefinierte Körper mit bekannten Formeln in relativ großen Programmen simuliert und getestet werden. Da die IDE jedoch nicht immer die beste Performance bietet, ist es besonders wichtig, auf Clean Code und die Vermeidung von Memory Leaks zu achten.
+	
+	
+	
+	
+	\newpage
+\begin{thebibliography}{5}
+	\bibitem{leifiphysik}
+	\href{https://www.leifiphysik.de/mechanik/impulserhaltung-und-stoesse/grundwissen/zentraler-elastischer-stoss}{Leifi Physik: Zentraler elastischer Stoß}
+	\bibitem{happycoding}
+	\href{https://happycoding.io/tutorials/processing/collision-detection}{Happy Coding: Collision Detection Tutorial}
+	\bibitem{serlo}
+	\href{https://de.serlo.org/mathe/1783/abstand-zweier-punkte-berechnen}{Serlo: Abstand zweier Punkte berechnen}
+	\bibitem{Wiki}
+	\href{https://de.wikipedia.org/wiki/Effet}{Effet - Wikipedia}
+		\bibitem{leifiphysik}
+	\href{	https://www.leifiphysik.de/mechanik/kreisbewegung/grundwissen/bahngeschwindigkeit-und-winkelgeschwindigkeit}{Bahngeschwindigkeit und Winkelgeschwindigkeit}
+
+\end{thebibliography}
+
 	
 	
 \end{document}
