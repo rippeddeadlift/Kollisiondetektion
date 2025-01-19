@@ -30,7 +30,6 @@ public class Ball
     our_sphere = createShape(SPHERE, this.Radius());
     our_sphere.setStroke(false);
     our_sphere.setTexture(texture);
-    our_sphere.endShape();
     noStroke();
   }
 
@@ -158,6 +157,5 @@ public class Ball
     our_sphere = createShape(SPHERE, radius);
     our_sphere.setStroke(false);
     our_sphere.setTexture(texture);
-    our_sphere.endShape();
   }
 }
