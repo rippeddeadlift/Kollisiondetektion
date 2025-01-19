@@ -17,9 +17,6 @@ boolean drawVector = false;
 boolean makeEffet = false;
 
 //modes
-boolean noCollision = true;
-boolean collision = false;
-boolean impulsMasse = false;
 TunnelingDemo tunnelingDemo = new TunnelingDemo();
 Mode currentMode = Mode.NOCOLLISION;
 PGraphics pg;
@@ -63,25 +60,26 @@ void setup()
 void draw() 
 {
     background(80);  // gray background 
-    if(impulsMasse){
-      textFont(mono);
-      fill(255, 255, 255);
-      text("Ball linksclick: +10% Masse, +5% Radius", 10, 600 + 2 * 25);
-      text("Ball Rechtsclick: -10% Masse, -5% Radius", 10, 600 + 3 * 25);
-    }
     if(showModes) background(pg);
-    if (noCollision) {
-      startDrawingBallsAndPhysics();
-  } else if (collision) {
-      startDrawingBallsAndPhysics();
-        if (!forceFreeze)  
-          theBalls.detectCollisions();
-  } else if (impulsMasse) {
-        startDrawingBallsAndPhysics();
-        if (!forceFreeze)  
-          theBalls.detectCollisions();
+    startDrawingBallsAndPhysics();
+    switch(currentMode){
+      case TUNNELING:
+        tunnelingDemo.draw();
+        break;
+      case NOCOLLISION:
+        break;
+      case COLLISION:
+        if(!forceFreeze) theBalls.detectCollisions();
+        break;
+      case IMPULSE:
+        if(!forceFreeze) theBalls.detectCollisions();
         theBalls.impulsMasse = true;
-  }
+        textFont(mono);
+        fill(255, 255, 255);
+        text("Ball linksclick: +10% Masse, +5% Radius", 10, 600 + 2 * 25);
+        text("Ball Rechtsclick: -10% Masse, -5% Radius", 10, 600 + 3 * 25);
+        break;  
+    }
 }
 void startDrawingBallsAndPhysics() {
   lightSpecular(255,255,255);
@@ -98,9 +96,6 @@ void startDrawingBallsAndPhysics() {
   if(makeEffet){
     effet = new Effet(theBalls);
     effet.draw();
-  }
-  if(currentMode == Mode.TUNNELING){
-    tunnelingDemo.draw();
   }
 }
 
@@ -171,37 +166,25 @@ void keyPressed()
   }
 }
 
-void restart() {
-}
-
-
 void activateMode(Mode mode) {
-
-  noCollision = false;
-  collision = false;
-  impulsMasse = false;
   theBalls.impulsMasse = false;
   switch(mode){
     case NOCOLLISION:
-      noCollision = true;
+      currentMode = Mode.NOCOLLISION;
       theBalls = new CBalls(totalball);
-      tunnelingDemo.close();
       break;
     case COLLISION:
-      collision = true;
+      currentMode = Mode.COLLISION;
       theBalls = new CBalls(totalball);
-      tunnelingDemo.close();
       break;
     case IMPULSE:
-      impulsMasse = true;
+      currentMode = Mode.IMPULSE;
       theBalls = new CBalls(totalball);
-      tunnelingDemo.close();
       break;
     case TUNNELING:
-      collision = true;
+      currentMode = Mode.TUNNELING;
       theBalls = new CBalls(1);
       tunnelingDemo.init(theBalls);
-      currentMode = Mode.TUNNELING;
       break;
  
 }}
