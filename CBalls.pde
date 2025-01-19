@@ -84,21 +84,7 @@ boolean isMouseOverBall(Ball b, float mx, float my) {
   return sqrt(dx * dx + dy * dy) <= b.radius;
 }
 
-  void bruteforce(){
-    for (int i = 0; i < ball.length; i++) {
-        for (int j = i + 1; j < ball.length; j++) {
-          Ball b1 = ball[i];
-          Ball b2 = ball[j];
-          // Formel um Distanz zu berechnen: sqrt((b2.sx-b1.sx)^2 + (b2.sy-b1.sy)^2)
-          float dx = (float)(b1.sx - b2.sx);
-          float dy = (float)(b1.sy - b2.sy);
-          float distance = (float)Math.sqrt(dx * dx + dy * dy);  
-          if (distance < b1.Radius() + b2.Radius()) {
-            collisionanswer(distance, b1, b2, dx, dy);
-          }
-        }
-    }
-  }
+
   
   void quadTreeDetection(){
     for(int i = 0; i < ball.length; i++){
@@ -129,12 +115,29 @@ boolean isMouseOverBall(Ball b, float mx, float my) {
     //   ball[bn].MouseUp();
     // }
   }
+    void bruteforce(){
+    for (int i = 0; i < ball.length; i++) {
+        for (int j = i + 1; j < ball.length; j++) {
+          Ball b1 = ball[i];
+          Ball b2 = ball[j];
+          // Formel um Distanz zu berechnen: sqrt((b2.sx-b1.sx)^2 + (b2.sy-b1.sy)^2)
+          float dx = (float)(b1.sx - b2.sx);
+          float dy = (float)(b1.sy - b2.sy);
+          float distance = (float)Math.sqrt(dx * dx + dy * dy);  
+          if (distance < b1.Radius() + b2.Radius()) {
+            collisionanswer(distance, b1, b2, dx, dy);
+          }
+        }
+    }
+  }
   
   void collisionanswer(float distance, Ball b1, Ball b2, float dx, float dy){
+    // dist = 100
+    // b1.r + b2.r = 50
     float overlap = 0.5f * (distance - b1.Radius() - b2.Radius());
     float nx = dx / distance;
     float ny = dy / distance;
-    if (overlap > 0){
+    if (overlap < 0){
       println("Overlap detected", overlap);
       b1.sx -= overlap * (b1.sx - b2.sx) / distance;
       b1.sy -= overlap * (b1.sy - b2.sy) / distance;

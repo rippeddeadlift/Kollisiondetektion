@@ -5,7 +5,7 @@
 import ddf.minim.*;    // AudioPlayer, Minim
 CBalls theBalls;
 VectorDrawer vd;
-int totalball = 5;               // number of balls 
+int totalball = 10;               // number of balls 
 PFont mono;
 Effet effet;
 boolean showHelp=false;          // toggle help text
@@ -200,7 +200,6 @@ void activateMode(Mode mode) {
       tunnelingDemo.close();
       break;
     case TUNNELING:
-      showModes = false;
       collision = true;
       theBalls = new CBalls(1);
       tunnelingDemo.init(theBalls);
