@@ -5,6 +5,8 @@ public class CBalls {
   boolean impulsMasse = false;
   boolean mousedown   = false;
   Quadtree qtree;
+  int bruteForceChecks = 0;
+  int quadTreeChecks = 0;
 
   Ball[] ball;
 
@@ -12,7 +14,7 @@ public class CBalls {
     qtree = new Quadtree(width / 2, height / 2, width / 2, height / 2, 4);
     ball = new Ball[totalball];
     for (int bn=0; bn < ball.length; bn++) {
-       ball[bn] = new Ball(bn);
+       ball[bn] = new Ball(0);
        qtree.insert(ball[bn]);
     }
   }
@@ -38,7 +40,7 @@ void game_physics() {
     //log(n^2) Algorithmus (BF)
     bruteforce();
     //log(nlog(n) Algorithmus (QuadTree))
-    //quadTreeDetection();
+    quadTreeDetection();
   }
 
  
@@ -75,18 +77,22 @@ boolean isMouseOverBall(Ball b, float mx, float my) {
 
   void bruteforce(){
     for (int i = 0; i < ball.length; i++) {
-        for (int j = i + 1; j < ball.length; j++) {
+        for (int j = 0; j < ball.length; j++) {
+          bruteForceChecks++;
           Ball b1 = ball[i];
           Ball b2 = ball[j];
-          // Formel um Distanz zu berechnen: sqrt((b2.sx-b1.sx)^2 + (b2.sy-b1.sy)^2)
-          float dx = (float)(b1.sx - b2.sx);
-          float dy = (float)(b1.sy - b2.sy);
-          float distance = (float)Math.sqrt(dx * dx + dy * dy);  
-          if (distance <= b1.Radius() + b2.Radius()) {
-            collisionanswer(distance, b1, b2, dx, dy);
+          if(b1 != b2){
+            // Formel um Distanz zu berechnen: sqrt((b2.sx-b1.sx)^2 + (b2.sy-b1.sy)^2)
+            float dx = (float)(b1.sx - b2.sx);
+            float dy = (float)(b1.sy - b2.sy);
+            float distance = (float)Math.sqrt(dx * dx + dy * dy);  
+            if (distance <= b1.Radius() + b2.Radius()) {
+              collisionanswer(distance, b1, b2, dx, dy);
+            }
           }
         }
     }
+    println("BFC: " + bruteForceChecks +  " at Frame: " + frameCount);
   }
   
   void quadTreeDetection(){
@@ -94,20 +100,19 @@ boolean isMouseOverBall(Ball b, float mx, float my) {
       Ball b1 = ball[i];
       b1.ballColor = color(0,0,255);
       ArrayList<Ball> otherBalls = qtree.query(new PVector(ball[i].Sx(), ball[i].Sy()), ball[i].Radius() * 2, ball[i].Radius() * 2);
-      for(Ball b : otherBalls){
-        b.ballColor = color(255,0,0);
-      }
       for(int j = 0; j < otherBalls.size(); j++){
+        quadTreeChecks++;
         Ball b2 = otherBalls.get(j);
         b2.ballColor = color(0,255,0);
         float dx = (b1.Sx() - b2.Sx());
         float dy = (b1.Sy() - b2.Sy());
         float distance =  dist(ball[i].Sx(), ball[i].Sy(), otherBalls.get(j).Sx(), otherBalls.get(j).Sy());
         if(b1 != b2 && distance < (ball[i].Radius() + otherBalls.get(j).Radius())){
-          collisionanswer(distance, ball[i], otherBalls.get(j), dx, dy);
+          //collisionanswer(distance, ball[i], otherBalls.get(j), dx, dy);
         }
       }
     }
+    println("QTC: " + quadTreeChecks + " at frame: " + frameCount);
   }
   
   /* Released mouse */
@@ -124,7 +129,6 @@ boolean isMouseOverBall(Ball b, float mx, float my) {
     float nx = dx / distance;
     float ny = dy / distance;
     if (overlap < 0){
-      println("Overlap detected", overlap);
       b1.sx -= overlap * (b1.sx - b2.sx) / distance;
       b1.sy -= overlap * (b1.sy - b2.sy) / distance;
       b2.sx += overlap * (b1.sx - b2.sx) / distance;

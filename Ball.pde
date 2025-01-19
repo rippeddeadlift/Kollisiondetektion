@@ -26,7 +26,7 @@ public class Ball
     this.vy=random(50);
     this.sy=+50;
     this.vx=random(50);
-    this.sx=100;
+    this.sx=random(width);
     our_sphere = createShape(SPHERE, this.Radius());
     our_sphere.setStroke(false);
     our_sphere.setTexture(texture);
