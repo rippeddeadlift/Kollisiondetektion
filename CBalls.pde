@@ -134,8 +134,10 @@ boolean isMouseOverBall(Ball b, float mx, float my) {
   }
   
   void collisionanswer(float distance, Ball b1, Ball b2, float dx, float dy){
-    float overlap =  (distance - (b1.Radius() + b2.Radius()));
-    if (overlap > 0){
+    float overlap = 0.5f * (distance - b1.Radius() - b2.Radius());
+    float nx = dx / distance;
+    float ny = dy / distance;
+    if (overlap < 0){
       println("Overlap detected", overlap);
       b1.sx -= overlap * (b1.sx - b2.sx) / distance;
       b1.sy -= overlap * (b1.sy - b2.sy) / distance;
