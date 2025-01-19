@@ -1,6 +1,6 @@
 /**
  * Basic version of balls-project 
- * 	(no collision, no textures)
+ *   (no collision, no textures)
  */
 import ddf.minim.*;    // AudioPlayer, Minim
 CBalls theBalls;
@@ -44,10 +44,10 @@ void setup()
   floor_y     = height;
   mid_x = width/2.0;
 
+  mono = createFont("Cascadia Code", 22);
   frameRate(50);
   pg = createGraphics(width, height);
   pg.beginDraw();
-  PFont mono = createFont("Cascadia Code", 22);
   pg.textFont(mono);
   pg.fill(255, 255, 255);
   pg.text("1: Root Mode / Normalmode ", 10, 35);
@@ -63,7 +63,13 @@ void setup()
 void draw() 
 {
     background(80);  // gray background 
-    if(showModes) image(pg, 0, 0);
+    if(impulsMasse){
+      textFont(mono);
+      fill(255, 255, 255);
+      text("Ball linksclick: +10% Masse, +5% Radius", 10, 600 + 2 * 25);
+      text("Ball Rechtsclick: -10% Masse, -5% Radius", 10, 600 + 3 * 25);
+    }
+    if(showModes) background(pg);
     if (noCollision) {
       startDrawingBallsAndPhysics();
   } else if (collision) {
@@ -86,9 +92,11 @@ void startDrawingBallsAndPhysics() {
   if (!forceFreeze)  
     theBalls.game_physics();
   if(drawVector){
+    vd = new VectorDrawer();
     vd.draw(theBalls);
   }
   if(makeEffet){
+    effet = new Effet(theBalls);
     effet.draw();
   }
   if(currentMode == Mode.TUNNELING){
