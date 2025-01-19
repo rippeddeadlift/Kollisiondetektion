@@ -61,6 +61,7 @@ void game_physics() {
 
         ball[bn].radius = constrain((float) ball[bn].radius, 0.4f*65, 0.4f*300);
         ball[bn].MASS = constrain((float) ball[bn].MASS, 1, 10);
+        ball[bn].updateSphere();
     }
   }
 }}
