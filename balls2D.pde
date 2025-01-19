@@ -1,11 +1,11 @@
 /**
  * Basic version of balls-project 
- * 	(no collision, no textures)
+ *   (no collision, no textures)
  */
 import ddf.minim.*;    // AudioPlayer, Minim
 CBalls theBalls;
 VectorDrawer vd;
-int totalball = 10;               // number of balls 
+int totalball = 5;               // number of balls 
 PFont mono;
 Effet effet;
 boolean showHelp=false;          // toggle help text
@@ -69,7 +69,7 @@ void draw()
       text("Ball linksclick: +10% Masse, +5% Radius", 10, 600 + 2 * 25);
       text("Ball Rechtsclick: -10% Masse, -5% Radius", 10, 600 + 3 * 25);
     }
-    if(showModes) image(pg, 0, 0);
+    if(showModes) background(pg);
     if (noCollision) {
       startDrawingBallsAndPhysics();
   } else if (collision) {
@@ -92,9 +92,11 @@ void startDrawingBallsAndPhysics() {
   if (!forceFreeze)  
     theBalls.game_physics();
   if(drawVector){
+    vd = new VectorDrawer();
     vd.draw(theBalls);
   }
   if(makeEffet){
+    effet = new Effet(theBalls);
     effet.draw();
   }
   if(currentMode == Mode.TUNNELING){
@@ -144,7 +146,6 @@ void keyPressed()
       break;
   case 't':
      if(currentMode == Mode.TUNNELING){
-      println("im in tunneling mode");
        tunnelingDemo.adjustFramerateAndYVelocity();
      }
       break;
@@ -171,48 +172,36 @@ void keyPressed()
 }
 
 void restart() {
-theBalls.restart();
 }
 
 
 void activateMode(Mode mode) {
-  
 
   noCollision = false;
   collision = false;
   impulsMasse = false;
   theBalls.impulsMasse = false;
-  if (mode != mode.TUNNELING) {
-    restart();
-    showModes = true;
-    tunnelingDemo.close();
-  }
   switch(mode){
     case NOCOLLISION:
       noCollision = true;
-      currentMode = Mode.NOCOLLISION;
+      theBalls = new CBalls(totalball);
+      tunnelingDemo.close();
       break;
     case COLLISION:
       collision = true;
-      currentMode = Mode.COLLISION;
+      theBalls = new CBalls(totalball);
+      tunnelingDemo.close();
       break;
     case IMPULSE:
       impulsMasse = true;
-      currentMode = Mode.IMPULSE;
+      theBalls = new CBalls(totalball);
+      tunnelingDemo.close();
       break;
     case TUNNELING:
-      showModes = false;
       collision = true;
-
-      for (int i = 1; i < theBalls.ball.length; i++) {
-        Ball ball = theBalls.ball[i];
-        
-        ball.active = false; 
-      }
-
-      //CBalls theBallss = new CBalls(1);
-      currentMode = Mode.TUNNELING;
+      theBalls = new CBalls(1);
       tunnelingDemo.init(theBalls);
+      currentMode = Mode.TUNNELING;
       break;
  
 }}

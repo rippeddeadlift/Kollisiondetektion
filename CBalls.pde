@@ -1,4 +1,3 @@
-
 /**
  * Container class for a number (totalball) of Ball objects
  */
@@ -17,20 +16,6 @@ public class CBalls {
        qtree.insert(ball[bn]);
     }
   }
-
-  void restart() {
-    
-  frameRate(50);
-  for (int bn = 0; bn < ball.length; bn++) {
-  ball[bn].sx = 100;
-  ball[bn].sy = 50;
-  ball[bn].radius=0.4f*60;
-  ball[bn].MASS = 1;
-  ball[bn].vy=random(50);  
-  ball[bn].vx=random(50); 
-  ball[bn].active = true;
-  }
-}
 
   void draw() 
   {
@@ -96,7 +81,7 @@ boolean isMouseOverBall(Ball b, float mx, float my) {
           float dx = (float)(b1.sx - b2.sx);
           float dy = (float)(b1.sy - b2.sy);
           float distance = (float)Math.sqrt(dx * dx + dy * dy);  
-          if (distance <= b1.Radius() + b2.Radius() && b1.active == true && b2.active == true) {
+          if (distance <= b1.Radius() + b2.Radius()) {
             collisionanswer(distance, b1, b2, dx, dy);
           }
         }
@@ -134,16 +119,16 @@ boolean isMouseOverBall(Ball b, float mx, float my) {
   }
   
   void collisionanswer(float distance, Ball b1, Ball b2, float dx, float dy){
-    float overlap =  (distance - (b1.Radius() + b2.Radius()));
-    if (overlap > 0){
+    float overlap = 0.5f * (distance - b1.Radius() - b2.Radius());
+    float nx = dx / distance;
+    float ny = dy / distance;
+    if (overlap < 0){
       println("Overlap detected", overlap);
       b1.sx -= overlap * (b1.sx - b2.sx) / distance;
       b1.sy -= overlap * (b1.sy - b2.sy) / distance;
       b2.sx += overlap * (b1.sx - b2.sx) / distance;
       b2.sy += overlap * (b1.sy - b2.sy) / distance;
     }
-     float nx = dx / distance;
-     float ny = dy / distance;
      float dvx = (float)(b1.vx - b2.vx);
      float dvy = (float)(b1.vy - b2.vy);
   

@@ -7,10 +7,9 @@ public class Effet {
 
     public void draw() {
         for (int i = 0; i < cBalls.ball.length; i++) {
-          cBalls.ball[i].makeEffet = true; 
+            cBalls.ball[i].makeEffet = true; 
             cBalls.ball[i].angleX += cBalls.ball[i].vx * 0.07 / cBalls.ball[i].radius;
-            cBalls.ball[i].angleY += cBalls.ball[i].vy * 0.07 / cBalls.ball[i].radius;
-             
+            cBalls.ball[i].angleY += cBalls.ball[i].vy * 0.07 / cBalls.ball[i].radius;  
         }
     }
 
