@@ -9,6 +9,7 @@ public class CBalls {
   int quadTreeChecks = 0;
   ConnectionDrawer cd;
   boolean useQuadTree = false;
+  boolean displayConnections = false;
 
   ArrayList<Ball> balls = new ArrayList();
 
@@ -32,7 +33,6 @@ public class CBalls {
     for(Ball ball : balls){
       qtree.insert(ball);
     }
-    if(useQuadTree) qtree.show();
     text("BF Checks: " + bruteForceChecks, 50, 600 + 2 * 25 );
     text("QT Checks: " + quadTreeChecks, 50, 600 + 3 * 25 );
   } 
@@ -82,7 +82,7 @@ void game_physics() {
       for (Ball b1 : balls) {
           for (Ball b2 : balls) {
               bruteForceChecks++;
-              if(!useQuadTree)cd.draw(b1,b2);
+              if(!useQuadTree && displayConnections)cd.draw(b1,b2);
               if (b1 != b2) {
                   // Formel um Distanz zu berechnen: sqrt((b2.sx-b1.sx)^2 + (b2.sy-b1.sy)^2)
                   float dx = (float)(b1.sx - b2.sx);
@@ -103,7 +103,7 @@ void game_physics() {
       list.clear();
       qtree.retrieve(list, balls.get(i));
       for(Ball ball : list){
-        if(useQuadTree) cd.draw(b1,ball);
+        if(useQuadTree && displayConnections) cd.draw(b1,ball);
       }
       for(int j = 0; j < list.size(); j++){
         quadTreeChecks++;

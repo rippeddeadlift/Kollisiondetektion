@@ -62,7 +62,7 @@ void draw()
       case NOCOLLISION:
         break;
       case COLLISION:
-        if(!forceFreeze) theBalls.detectCollisions();
+        theBalls.detectCollisions();
         break;
       case IMPULSE:
         if(!forceFreeze) theBalls.detectCollisions();
@@ -148,6 +148,8 @@ void keyPressed()
   case 'x':
    toggleAlgorithm();
    break;
+  case 'y':
+    toggleDisplayConnections();
   case 'r':
     randomFloor = !randomFloor; 
     if ( randomFloor) println("State: random floor ON"); 
@@ -185,6 +187,9 @@ void activateMode(Mode mode) {
 
 void toggleAlgorithm(){
   theBalls.useQuadTree = !theBalls.useQuadTree;
+}
+void toggleDisplayConnections(){
+  theBalls.displayConnections = !theBalls.displayConnections;
 }
 
 void addBall(){
