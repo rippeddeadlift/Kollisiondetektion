@@ -4,10 +4,11 @@
 public class CBalls {
   boolean impulsMasse = false;
   boolean mousedown   = false;
-  boolean useQuadTree = false;
   Quadtree qtree;
   int bruteForceChecks = 0;
   int quadTreeChecks = 0;
+  ConnectionDrawer cd;
+  boolean useQuadTree = false;
 
   ArrayList<Ball> balls = new ArrayList();
 
@@ -18,14 +19,19 @@ public class CBalls {
        balls.add(ball);
        qtree.insert(ball);
     }
+    cd = new ConnectionDrawer();
   }
 
   void draw() 
   {
+    qtree = new Quadtree(0, 0, width, height, 4);
     for(Ball ball : balls){
+      qtree.insert(ball);
       ball.draw();
     }
-    qtree.show();
+    if(useQuadTree) qtree.show();
+    text("BF Checks: " + bruteForceChecks, 50, 600 + 2 * 25 );
+    text("QT Checks: " + quadTreeChecks, 50, 600 + 3 * 25 );
   } 
 
 void game_physics() {
@@ -76,6 +82,7 @@ boolean isMouseOverBall(Ball b, float mx, float my) {
           bruteForceChecks++;
           Ball b1 = balls.get(i);
           Ball b2 = balls.get(j);
+          if(!useQuadTree)cd.draw(b1,b2);
           if(b1 != b2){
             // Formel um Distanz zu berechnen: sqrt((b2.sx-b1.sx)^2 + (b2.sy-b1.sy)^2)
             float dx = (float)(b1.sx - b2.sx);
@@ -96,11 +103,12 @@ boolean isMouseOverBall(Ball b, float mx, float my) {
       for(int j = 0; j < otherBalls.size(); j++){
         quadTreeChecks++;
         Ball b2 = otherBalls.get(j);
+        if(useQuadTree) cd.draw(b1,b2);
         float dx = (b1.Sx() - b2.Sx());
         float dy = (b1.Sy() - b2.Sy());
         float distance =  dist(b1.Sx(), b1.Sy(), b2.Sx(), b2.Sy());
-        if(useQuadTree && b1 != b2 && distance < (b1.Radius() + b2.Radius())){
-          collisionanswer(distance, b1, b2, dx, dy);
+        if(b1 != b2 && distance < (b1.Radius() + b2.Radius()) && useQuadTree){
+            collisionanswer(distance, b1, b2, dx, dy);
         }
       }
     }
