@@ -59,16 +59,13 @@ public class TunnelingDemo{
   }
   
   void adjustFramerateAndYVelocity(){
-    if(counter % 2 == 0){
       ball.vx = 0;
       ball.sx = width/2;
       ball.sy = 0;
+    if(counter % 2 == 0){
       ball.vy = 2500;
       frameRate(3);
     }else{
-      ball.vx = 0;
-      ball.sx = width/2;
-      ball.sy = 0;
       ball.vy = 25;
       frameRate(120);
     }

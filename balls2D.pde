@@ -41,9 +41,8 @@ void draw()
 {
     background(80);  // gray background 
     if(showModes) background(pg);
-    fill(color(255,255,255));
-    text("Aktuelle FPS: " + frameRate, 10, 600 + 2 * 25);
-    text("Anzahl Elemente: " + totalball, 10, 600 + 3 * 25);
+    td.displayCurrentFps();
+    td.displayAmountOfElements(totalball);
     startDrawingBallsAndPhysics();
     switch(currentMode){
       case TUNNELING:

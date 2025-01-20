@@ -45,4 +45,13 @@ class TextDrawer{
     pg.endDraw();
     return pg;
   }
+  
+  public void displayCurrentFps(){
+    fill(color(255, 255, 255));
+    text("Aktuelle FPS: " + frameRate, 10, 600 + 2 * 25);
+  }
+  public void displayAmountOfElements(int amount){
+    fill(color(255, 255, 255));
+    text("Anzahl Elemente: " + amount, 10, 600 + 3 * 25);
+  }
 }
