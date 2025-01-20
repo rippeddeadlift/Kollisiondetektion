@@ -1,18 +1,14 @@
 public class TunnelingDemo{
-  
-  final String LOW_FPS_HINT_TEXT = "LOW FPS, HIGH VELOCITY, HARD TO DETECT, \n PRESS T TO TOGGLE NORMAL";
-  final String HIGH_FPS_HINT_TEXT = "HIGH FPS, MODERATE VELOCITY, UNDETECTABLE, \n PRESS T TO TOGGLE TUNNELING";
+  TextDrawer td;
   CBalls ballContainer;
   Ball ball;
   boolean collisionDetected = false;
   boolean active = false;
   int counter = 0;
-  
-    PGraphics pgHigh;
-    PGraphics pgLow;
-    PFont mono;
+  PGraphics pg;
   
   public void init(CBalls ballContainer){
+    td = new TextDrawer();
     this.active = true;
     counter = 0;
     this.ballContainer = ballContainer;
@@ -21,7 +17,6 @@ public class TunnelingDemo{
     ball.sx = width/2;
     ball.sy = 0;
     frameRate(50);
-    hintGraphics();
     draw();
   }
   void draw(){
@@ -53,40 +48,14 @@ public class TunnelingDemo{
        collisionDetected = false;
      };
   }
-    void hintGraphics() {
-    pgHigh = createGraphics(width, height);
-    pgLow = createGraphics(width, height);
-    mono = createFont("Cascadia Code", 22);
-
-    pgHigh.beginDraw();
-    pgHigh.textFont(mono);
-    pgHigh.fill(255, 0, 0);
-    pgHigh.text(HIGH_FPS_HINT_TEXT, 35,650 );
-    pgHigh.endDraw();
-
-    pgLow.beginDraw();
-    pgLow.textFont(mono);
-    pgLow.fill(255, 0, 0);
-    pgLow.text(LOW_FPS_HINT_TEXT, 35, 650);
-    pgLow.endDraw();
-  }
   
   void close(){
     this.active = false;
-      pgHigh = null;
-      pgLow = null;
   }
   
   void showHint(){
-    //TODO: text() to graphic and display graphic as bg.
-
-    textFont(mono);
-    fill(255,255,255);
-    if(counter % 2 == 0){
-      image(pgHigh, 0, 0);  
-    }else{
-      image(pgLow, 0, 0);  
-    }
+      pg = td.setupTunnelingDemoHintText(counter % 2 == 0);
+      image(pg,0,0);
   }
   
   void adjustFramerateAndYVelocity(){

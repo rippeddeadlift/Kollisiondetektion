@@ -1,5 +1,6 @@
 CBalls theBalls;
 VectorDrawer vd;
+TextDrawer td;
 int totalball = 2;               // number of balls  
 PFont mono; 
 Effet effet;
@@ -30,30 +31,19 @@ void setup()
   theBalls = new CBalls(totalball);
   vd = new VectorDrawer();
   effet = new Effet(theBalls);
+  td = new TextDrawer();
   rightwall_x = width;
   floor_y     = height;
   mid_x = width/2.0;
-  mono = createFont("Cascadia Code", 22);
-  pg = createGraphics(width, height);
-  pg.beginDraw();
-  pg.textFont(mono);
-  pg.fill(255, 255, 255);
-  pg.text("1: Root Mode / Normalmode ", 10, 35);
-  pg.text("2: Kollisiondetektion", 10, 35 + 1 * 25);
-  pg.text("3: Impuls Demonstration", 10, 35 + 2 * 25);
-  pg.text("4: Tunneling Demonstration", 10, 35 + 3 * 25);
-  pg.text("e: Effet ",400,35);
-  pg.text("v: VectorDrawer",400,35+1*25);
-  pg.text("x: Toggle Algorithm",400,35+2*25);
-  pg.endDraw();
-
+  pg = td.setupMenuText();
 }
 void draw() 
 {
     background(80);  // gray background 
     if(showModes) background(pg);
-    text(frameRate, 10, 600 + 2 * 25);
-    text(totalball, 10, 600 + 3 * 25);
+    fill(color(255,255,255));
+    text("Aktuelle FPS: " + frameRate, 10, 600 + 2 * 25);
+    text("Anzahl Elemente: " + totalball, 10, 600 + 3 * 25);
     startDrawingBallsAndPhysics();
     switch(currentMode){
       case TUNNELING:
@@ -65,12 +55,10 @@ void draw()
         theBalls.detectCollisions();
         break;
       case IMPULSE:
+        theBalls.displayAlgorithmicChecks = false;
         if(!forceFreeze) theBalls.detectCollisions();
         theBalls.impulsMasse = true;
-        textFont(mono);
-        fill(255, 255, 255);
-        text("Ball linksclick: +10% Masse, +5% Radius", 10, 600 + 2 * 25);
-        text("Ball Rechtsclick: -10% Masse, -5% Radius", 10, 600 + 3 * 25);
+        td.displayImpulseHintText();
         break;  
     }
 }
@@ -150,6 +138,7 @@ void keyPressed()
    break;
   case 'y':
     toggleDisplayConnections();
+    break;
   case 'r':
     randomFloor = !randomFloor; 
     if ( randomFloor) println("State: random floor ON"); 
@@ -165,21 +154,27 @@ void keyPressed()
 
 void activateMode(Mode mode) {
   theBalls.impulsMasse = false;
+  theBalls.bruteForceChecks = 0;
+  theBalls.quadTreeChecks = 0;
   switch(mode){
     case NOCOLLISION:
       currentMode = Mode.NOCOLLISION;
+      theBalls.displayAlgorithmicChecks = false;
       frameRate(50);
       break;
     case COLLISION:
+      theBalls.displayAlgorithmicChecks = true;
       currentMode = Mode.COLLISION;
       frameRate(50);
       break;
     case IMPULSE:
       currentMode = Mode.IMPULSE;
+      theBalls.displayAlgorithmicChecks = false;
       frameRate(50);
       break;
     case TUNNELING:
       currentMode = Mode.TUNNELING;
+      theBalls.displayAlgorithmicChecks = false;
       theBalls = new CBalls(1);
       tunnelingDemo.init(theBalls);
       break;

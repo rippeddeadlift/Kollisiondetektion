@@ -10,6 +10,7 @@ public class CBalls {
   ConnectionDrawer cd;
   boolean useQuadTree = false;
   boolean displayConnections = false;
+  boolean displayAlgorithmicChecks = false;
 
   ArrayList<Ball> balls = new ArrayList();
 
@@ -33,8 +34,10 @@ public class CBalls {
     for(Ball ball : balls){
       qtree.insert(ball);
     }
-    text("BF Checks: " + bruteForceChecks, 50, 600 + 2 * 25 );
-    text("QT Checks: " + quadTreeChecks, 50, 600 + 3 * 25 );
+    if(displayAlgorithmicChecks){
+      text("BF Checks: " + bruteForceChecks, width/2, 600 + 2 * 25 );
+      text("QT Checks: " + quadTreeChecks, width/2, 600 + 3 * 25 );
+    }
   } 
 
 void game_physics() {
