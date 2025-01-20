@@ -6,18 +6,14 @@ class Quadtree {
   float width_, height_;
   Quadtree[] children;
   PShape square;
-  int depth;
-  String name;
 
-  Quadtree(float x, float y, float w, float h, int n, int depth, String name) {
+  Quadtree(float x, float y, float w, float h, int n) {
     position = new PVector(x, y);
     width_ = w;
     height_ = h;
     capacity = n;
     balls = new ArrayList<Ball>();
     divided = false;
-    this.depth = depth;
-    this.name = name;
     this.children = new Quadtree[4];
   }
 
@@ -26,10 +22,10 @@ class Quadtree {
     float y = position.y;
     float w = width_ / 2;
     float h = height_ / 2;
-    children[0] = new Quadtree(x + w, y, w, h, capacity, depth+1, "northeast");
-    children[1] = new Quadtree(x, y, w, h, capacity, depth+1, "northwest");
-    children[2] = new Quadtree(x, y + h, w, h, capacity, depth+1, "southwest");
-    children[3] = new Quadtree(x + w, y + h, w, h, capacity, depth+1, "southeast");
+    children[0] = new Quadtree(x + w, y, w, h, capacity);
+    children[1] = new Quadtree(x, y, w, h, capacity);
+    children[2] = new Quadtree(x, y + h, w, h, capacity);
+    children[3] = new Quadtree(x + w, y + h, w, h, capacity);
     
     divided = true;
   }
@@ -64,23 +60,18 @@ class Quadtree {
         index = 3; // in southeast tree
       }
     }
-    println(index);
     return index;
   }
   
   public void insert(Ball b){
-    println("call inser");
     if(children[0] != null){
       int index = getIndex(b);
-      println("get index returned " + index);
       if(index != -1){
         children[index].insert(b);
         return;
       }
     }
       balls.add(b);
-      println("inserted");
-      println(balls.size());
       if(balls.size() > capacity){
         if(children[0] == null){
           subdivide();

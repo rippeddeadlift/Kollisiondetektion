@@ -13,7 +13,7 @@ public class CBalls {
   ArrayList<Ball> balls = new ArrayList();
 
   CBalls(int totalball) {
-    qtree = new Quadtree(0, 0, width, height, 4, 0, "root");
+    qtree = new Quadtree(0, 0, width, height, 4);
     for (int bn=0; bn < totalball; bn++) {
        Ball ball = new Ball(0);
        balls.add(ball);
@@ -24,7 +24,7 @@ public class CBalls {
 
   void draw() 
   {
-    qtree = new Quadtree(0, 0, width, height, 4, 0 , "root");
+    qtree = new Quadtree(0, 0, width, height, 4);
     for(Ball ball : balls){
       ball.draw();
     }
@@ -103,7 +103,7 @@ void game_physics() {
       list.clear();
       qtree.retrieve(list, balls.get(i));
       for(Ball ball : list){
-        //if(useQuadTree) cd.draw(b1,ball);
+        if(useQuadTree) cd.draw(b1,ball);
       }
       for(int j = 0; j < list.size(); j++){
         quadTreeChecks++;
