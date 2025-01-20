@@ -49,6 +49,7 @@ void setup()
   pg.text("4: Tunneling Demonstration", 10, 35 + 3 * 25);
   pg.text("e: Effet ",400,35);
   pg.text("v: VectorDrawer",400,35+1*25);
+  pg.text("x: Toggle Algorithm",400,35+2*25);
   pg.endDraw();
 
 }
@@ -56,6 +57,8 @@ void draw()
 {
     background(80);  // gray background 
     if(showModes) background(pg);
+    text(frameRate, 10, 600 + 2 * 25);
+    text(totalball, 10, 600 + 3 * 25);
     startDrawingBallsAndPhysics();
     switch(currentMode){
       case TUNNELING:
@@ -150,6 +153,9 @@ void keyPressed()
   case 'q':
     addBall();
     break;
+  case 'x':
+   toggleAlgorithm();
+   break;
   case 'r':
     randomFloor = !randomFloor; 
     if ( randomFloor) println("State: random floor ON"); 
@@ -193,6 +199,7 @@ void addBall(){
   if(currentMode != Mode.TUNNELING){
     Ball ball = new Ball(0, true);
     theBalls.add(ball);
+    totalball++;
   }
 }
 
