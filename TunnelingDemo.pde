@@ -17,12 +17,12 @@ public class TunnelingDemo{
     ball.sx = width/2;
     ball.sy = 0;
     frameRate(50);
+    ball.updateSphere();
     draw();
   }
   void draw(){
     if(active){
-      
-    showHint();
+      showHint();
       if(collisionDetected){
         fill(0,255,0);
       }else{
