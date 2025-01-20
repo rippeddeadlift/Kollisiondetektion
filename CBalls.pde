@@ -71,6 +71,7 @@ void game_physics() {
         ball.MASS = constrain((float) ball.MASS, 1, 10);
         ball.updateSphere();
     }
+    ball.updateSphere();
   }
 }} 
 
