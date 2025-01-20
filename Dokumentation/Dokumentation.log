@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.10.22)  20 JAN 2025 14:19
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.10.22)  20 JAN 2025 19:28
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -411,31 +411,31 @@ File: ../data/collision-detection-6.png Graphic file (type png)
 Package pdftex.def Info: ../data/collision-detection-6.png  used on input line 
 70.
 (pdftex.def)             Requested size: 386.95897pt x 267.71355pt.
-[2] [3 <../data/collision-detection-6.png>]
-Overfull \hbox (26.0528pt too wide) in paragraph at lines 146--148
-\OT1/cmr/m/n/12 lap") kom-men, da sich die Ob-jek-te zwi-schen den ein-zel-nen 
-Fra-mes wei-ter-be-we-gen. Die-se []Uberlappung
- []
-
-[4]
+[2] [3 <../data/collision-detection-6.png>] [4]
 Overfull \hbox (4.83357pt too wide) in paragraph at lines 195--196
 []\OT1/cmr/m/n/12 In Pro-ces-sing sind die Sph[]aren ein-far-big. Da-mit wir nu
 n die Wir-kung se-hen k[]onnen, ben[]otigen
  []
 
-<../data/earth.png, id=142, 722.7pt x 360.34625pt>
+
+Overfull \hbox (177.02846pt too wide) in paragraph at lines 215--215
+[]\OT1/cmtt/m/n/12 https://www.leifiphysik.de/mechanik/kreisbewegung/grundwisse
+n/bahngeschwindigkeit-und-winkelgeschwindigkeit[] 
+ []
+
+<../data/earth.png, id=141, 722.7pt x 360.34625pt>
 File: ../data/earth.png Graphic file (type png)
 <use ../data/earth.png>
 Package pdftex.def Info: ../data/earth.png  used on input line 219.
 (pdftex.def)             Requested size: 386.95897pt x 192.94003pt.
 [5]
-<../data/Sphere.png, id=150, 201.75375pt x 194.97844pt>
+<../data/Sphere.png, id=148, 201.75375pt x 194.97844pt>
 File: ../data/Sphere.png Graphic file (type png)
 <use ../data/Sphere.png>
 Package pdftex.def Info: ../data/Sphere.png  used on input line 226.
 (pdftex.def)             Requested size: 145.11053pt x 140.23857pt.
  [6 <../data/earth.png> <../data/Sphere.png (PNG copy)>]
-<quadtree.png, id=159, 1439.97975pt x 714.56963pt>
+<quadtree.png, id=157, 1439.97975pt x 714.56963pt>
 File: quadtree.png Graphic file (type png)
 <use quadtree.png>
 Package pdftex.def Info: quadtree.png  used on input line 270.
@@ -446,7 +446,7 @@ Overfull \hbox (6.03548pt too wide) in paragraph at lines 297--301
  Kol-li-si-ons-de-tek-ti-on ein-schlei-chen k[]onnten.
  []
 
-<tunneling.jpg, id=174, 451.6875pt x 301.125pt>
+<tunneling.jpg, id=172, 451.6875pt x 301.125pt>
 File: tunneling.jpg Graphic file (type jpg)
 <use tunneling.jpg>
 Package pdftex.def Info: tunneling.jpg  used on input line 304.
@@ -457,7 +457,7 @@ LaTeX2e <2023-06-01> patch level 1
 L3 programming layer <2023-10-10>
  ***********
 Package rerunfilecheck Info: File `Dokumentation.out' has not changed.
-(rerunfilecheck)             Checksum: 198CB948F88A72500E127CF5C4246AF9;3198.
+(rerunfilecheck)             Checksum: D744F15C2150D00A6216F83453D93CC0;3228.
  ) 
 Here is how much of TeX's memory you used:
  10844 strings out of 474504
@@ -478,10 +478,10 @@ pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><c:/te
 xlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb><c:/texlive/202
 3/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb><c:/texlive/2023/texmf-d
 ist/fonts/type1/public/cm-super/sfrm1200.pfb>
-Output written on Dokumentation.pdf (10 pages, 350817 bytes).
+Output written on Dokumentation.pdf (10 pages, 350976 bytes).
 PDF statistics:
- 271 PDF objects out of 1000 (max. 8388607)
- 226 compressed objects within 3 object streams
+ 270 PDF objects out of 1000 (max. 8388607)
+ 225 compressed objects within 3 object streams
  53 named destinations out of 1000 (max. 500000)
  218 words of extra memory for PDF output out of 10000 (max. 10000000)
 
