@@ -112,18 +112,7 @@ void game_physics() {
   }
   
   /* Released mouse */
-  void MouseUp ()
-  {
-    // System.out.printf("State: MOUSE_RELEASED\n");
-    // for (int bn=0; bn < ball.length; bn++) { 
-    //   ball[bn].MouseUp();
-    // }
-  }
-  
-  void add(Ball ball){
-    balls.add(ball);
-    qtree.insert(ball);
-  }
+ 
   
   void collisionanswer(float distance, Ball b1, Ball b2, float dx, float dy){
     float overlap = 0.5f * (distance - b1.Radius() - b2.Radius());
@@ -151,20 +140,6 @@ void game_physics() {
        b2.vy += impulse * b1.MASS * ny;
      };
  
-  }
-  void quadTreeDetection() {
-      for (Ball b1 : balls) {
-          ArrayList<Ball> otherBalls = qtree.query(new PVector(b1.Sx(), b1.Sy()), b1.Radius() * 2, b1.Radius() * 2);
-          for (Ball b2 : otherBalls) {
-              quadTreeChecks++;
-              float dx = (b1.Sx() - b2.Sx());
-              float dy = (b1.Sy() - b2.Sy());
-              float distance = dist(b1.Sx(), b1.Sy(), b2.Sx(), b2.Sy());
-              if (useQuadTree && b1 != b2 && distance < (b1.Radius() + b2.Radius())) {
-                  collisionanswer(distance, b1, b2, dx, dy);
-              }
-          }
-      }
   }
 
   
