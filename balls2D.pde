@@ -42,7 +42,7 @@ void setup()
   pg.text("2: Kollisiondetektion", 10, 35 + 1 * 25);
   pg.text("3: Impuls Demonstration", 10, 35 + 2 * 25);
   pg.text("4: Tunneling Demonstration", 10, 35 + 3 * 25);
-  pg.text("e: Effet ",400,35);
+  pg.text("e: Rotation ",400,35);
   pg.text("v: VectorDrawer",400,35+1*25);
   pg.text("x: Toggle Algorithm",400,35+2*25);
   pg.endDraw();
@@ -69,8 +69,8 @@ void draw()
         theBalls.impulsMasse = true;
         textFont(mono);
         fill(255, 255, 255);
-        text("Ball linksclick: +10% Masse, +5% Radius", 10, 600 + 2 * 25);
-        text("Ball Rechtsclick: -10% Masse, -5% Radius", 10, 600 + 3 * 25);
+        text("Ball linksclick: +10% Masse, +5% Radius", 10, 550 + 2 * 25);
+        text("Ball Rechtsclick: -10% Masse, -5% Radius", 10, 550 + 3 * 25);
         break;  
     }
 }

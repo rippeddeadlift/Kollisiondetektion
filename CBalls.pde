@@ -33,8 +33,9 @@ public class CBalls {
     for(Ball ball : balls){
       qtree.insert(ball);
     }
-    text("BF Checks: " + bruteForceChecks, 50, 600 + 2 * 25 );
-    text("QT Checks: " + quadTreeChecks, 50, 600 + 3 * 25 );
+    text("BF Checks: " + bruteForceChecks, 105, 600 + 2 * 25);
+    text("QT Checks: " + quadTreeChecks, 105, 600 + 3 * 25); 
+
   } 
 
 void game_physics() {
@@ -68,6 +69,7 @@ void game_physics() {
         ball.radius = constrain((float) ball.radius, 0.4f*65, 0.4f*300);
         ball.MASS = constrain((float) ball.MASS, 1, 10);
     }
+    ball.updateSphere();
   }
 }} 
 
