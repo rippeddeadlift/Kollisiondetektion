@@ -262,7 +262,7 @@ Beispiel im Code:
 	
 	
 	
-<<<<<<< HEAD
+
 	\subsection{Quad-Tree}
 	Der Quad-Tree ist eine Baumdatenstruktur, bei der jeder Knoten genau 4 Kindknoten enthält (Erinnerung an Algorithmik Vorlesung mit Binary Trees). Der Grund warum wir diese Datenstruktur gewählt haben um darauf Kollisionsdetektion anzuwenden ist, dass Quad-Trees eine Unterteilung eines 2D Raums auf 4 Quadranten möglich macht. Rekursiv verkleinert sich bei Bedarf dadurch die Fläche zum Suchen von möglichen Kollisionen.
 	\begin{figure}[H]
@@ -278,10 +278,8 @@ Beispiel im Code:
 		\item
 		Zuerst hatten wir das Problem, dass es uns aufgrund des fehlenden Rasters in Processing schwer fiel das Detektionsverhalten nachzuvollziehen. Es wurden anfangs teilweise Elemente ignoriert und wir wussten nicht warum auf einige Elemente die Detektion angewandt wurde und auf andere nicht.
 	\end{itemize}
-=======
 \subsection{Quadtree}
 Ein Quadtree oder Quaternärbaum ist in der Informatik eine Baumstruktur, in der jeder innere Knoten genau vier Kindknoten hat. \cite{Quadtree} Er wird häufig in der Computergrafik verwendet, um 2D-Räume effizient zu unterteilen. Im Vergleich zu einem Bruteforce bietet der Quadtree eine deutlich bessere Laufzeit, da die Komplexität bei Abfragen oder Einfügungen nur O(log(n)) beträgt. Obwohl der Quadtree eine bessere Leistung bietet, ist er komplexer in der Implementierung und Verwaltung.
->>>>>>> origin/ivan
 
 	
 	\section{Visualisierungen und Demonstrationen}
@@ -332,6 +330,23 @@ Der Radius hat ebenfalls einen Einfluss auf den Effet Effekt, da eine größere 
 	\section{Fazit}
 	
 Dieses Projekt sowie das Tool Processing bieten eine sehr gute Möglichkeit, Physik auf anschauliche Weise für Studierende zu demonstrieren. Durch die verschiedenen Projekte und eine spielerische Herangehensweise können vordefinierte Körper mit bekannten Formeln in relativ großen Programmen simuliert und getestet werden. Da die IDE jedoch nicht immer die beste Performance bietet, ist es besonders wichtig, auf Clean Code und die Vermeidung von Memory Leaks zu achten.
+
+\subsection{Allgemeine Probleme}
+\begin{itemize}
+	\item Debugger: \\
+	Das größte Problem, auf das wir gestoßen sind, ist, dass man mit Processing keine guten Möglichkeiten hat, den Debugger zu benutzen. Bereits bei kleineren Klassen fällt es schwer, jede Instanz nachzuverfolgen. Das Problem verschärft sich, wenn man Klassen innerhalb einer Klasse erstellt, wie z.B. bei uns mit dem Quadtree, oder wenn man rekursive Methoden debuggen möchte.
+	\item Text \& Farben:\\
+	Auch die einfache Erzeugung von Text oder das Anpassen von Farben bei Objekten hat uns an einigen Stellen viel Zeit gekostet. Wir haben festgestellt, dass durch die kontinuierliche Anzeige von Text in der draw() Methode Memory Leaks entstehen können, was dazu führt, dass das Programm abstürzen kann.\\
+	Bei der Farbänderung mancher Objekte wirkte sich die Anpassung direkt auf den sichtbaren Bereich aus. Das machte es notwendig, separate Methoden zu entwickeln, um Objekte gezielt in den Vorder- oder Hintergrund zu verschieben und ihre Darstellung präziser zu steuern.
+	
+	
+	
+\end{itemize}
+
+
+
+
+
 	
 	
 	
