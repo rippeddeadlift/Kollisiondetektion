@@ -51,7 +51,6 @@ public class Ball
 
   void draw() {
     if (times >= 0) {
-      updateSphere();
       pushMatrix();
       translate(Sx(), Sy(), 0);
       rotateX(angleX);
