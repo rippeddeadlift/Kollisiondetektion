@@ -43,7 +43,7 @@ void game_physics() {
     //log(n^2) Algorithmus (BF)
     bruteforce();
     //log(nlog(n) Algorithmus (QuadTree))
-    quadTreeDetection();
+    //quadTreeDetection();
   }
 
   void Mouse() {
@@ -64,36 +64,33 @@ void game_physics() {
 
         ball.radius = constrain((float) ball.radius, 0.4f*65, 0.4f*300);
         ball.MASS = constrain((float) ball.MASS, 1, 10);
-        ball.updateSphere();
     }
   }
-}}
-  
+}} 
 
-boolean isMouseOverBall(Ball b, float mx, float my) {
-  float dx = b.Sx() - mx;
-  float dy = b.Sy() - my;
-  return sqrt(dx * dx + dy * dy) <= b.radius;
-}
 
-  void bruteforce(){
-    for (int i = 0; i < balls.size(); i++) {
-        for (int j = 0; j < balls.size(); j++) {
-          bruteForceChecks++;
-          Ball b1 = balls.get(i);
-          Ball b2 = balls.get(j);
-          if(!useQuadTree)cd.draw(b1,b2);
-          if(b1 != b2){
-            // Formel um Distanz zu berechnen: sqrt((b2.sx-b1.sx)^2 + (b2.sy-b1.sy)^2)
-            float dx = (float)(b1.sx - b2.sx);
-            float dy = (float)(b1.sy - b2.sy);
-            float distance = (float)Math.sqrt(dx * dx + dy * dy);  
-            if (distance <= b1.Radius() + b2.Radius() && !useQuadTree) {
-              collisionanswer(distance, b1, b2, dx, dy);
-            }
+ 
+  boolean isMouseOverBall(Ball b, float mx, float my) {
+    float dx = b.Sx() - mx;
+    float dy = b.Sy() - my;
+    return sqrt(dx * dx + dy * dy) <= b.radius;
+  }
+  void bruteforce() {
+      for (Ball b1 : balls) {
+          for (Ball b2 : balls) {
+              bruteForceChecks++;
+              if(!useQuadTree)cd.draw(b1,b2);
+              if (b1 != b2) {
+                  // Formel um Distanz zu berechnen: sqrt((b2.sx-b1.sx)^2 + (b2.sy-b1.sy)^2)
+                  float dx = (float)(b1.sx - b2.sx);
+                  float dy = (float)(b1.sy - b2.sy);
+                  float distance = (float)Math.sqrt(dx * dx + dy * dy);
+                  if (distance <= b1.Radius() + b2.Radius() && !useQuadTree) {
+                      collisionanswer(distance, b1, b2, dx, dy);
+                  }
+              }
           }
-        }
-    }
+      }
   }
   
   void quadTreeDetection(){
@@ -155,4 +152,48 @@ boolean isMouseOverBall(Ball b, float mx, float my) {
      };
  
   }
+  void quadTreeDetection() {
+      for (Ball b1 : balls) {
+          ArrayList<Ball> otherBalls = qtree.query(new PVector(b1.Sx(), b1.Sy()), b1.Radius() * 2, b1.Radius() * 2);
+          for (Ball b2 : otherBalls) {
+              quadTreeChecks++;
+              float dx = (b1.Sx() - b2.Sx());
+              float dy = (b1.Sy() - b2.Sy());
+              float distance = dist(b1.Sx(), b1.Sy(), b2.Sx(), b2.Sy());
+              if (useQuadTree && b1 != b2 && distance < (b1.Radius() + b2.Radius())) {
+                  collisionanswer(distance, b1, b2, dx, dy);
+              }
+          }
+      }
+  }
+
+  
+  /* Released mouse */
+  void MouseUp ()
+  {
+    // System.out.printf("State: MOUSE_RELEASED\n");
+    // for (int bn=0; bn < ball.length; bn++) { 
+    //   ball[bn].MouseUp();
+    // }
+  }
+  
+  void add(Ball ball){
+    balls.add(ball);
+    qtree.insert(ball);
+  }
+  void remove(Ball ball){
+    balls.remove(ball);
+    //Todo remove qtree ball
+    //qtree.remove(ball);
+  }
+  Ball get(int number){
+    return balls.get(number); 
+  }
+  int size(){
+    return balls.size();
+  }
+  boolean isEmpty(){
+    return balls.isEmpty();
+  }
+
 }

@@ -415,7 +415,7 @@ File: collision-detection-6.png Graphic file (type png)
 <use collision-detection-6.png>
 Package pdftex.def Info: collision-detection-6.png  used on input line 70.
 (pdftex.def)             Requested size: 386.95897pt x 267.71355pt.
-[2] [3 <./collision-detection-6.png>]
+[2] [3 <../data/collision-detection-6.png>]
 Overfull \hbox (26.0528pt too wide) in paragraph at lines 146--148
 \OT1/cmr/m/n/12 lap") kom-men, da sich die Ob-jek-te zwi-schen den ein-zel-nen 
 Fra-mes wei-ter-be-we-gen. Die-se []Uberlappung

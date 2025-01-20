@@ -1,12 +1,7 @@
-/**
- * Basic version of balls-project 
- *   (no collision, no textures)
- */
-import ddf.minim.*;    // AudioPlayer, Minim
 CBalls theBalls;
 VectorDrawer vd;
-int totalball = 2;               // number of balls 
-PFont mono;
+int totalball = 2;               // number of balls  
+PFont mono; 
 Effet effet;
 boolean showHelp=false;          // toggle help text
 boolean forceFreeze = false;     // toggle game physics 
@@ -80,18 +75,18 @@ void draw()
     }
 }
 void startDrawingBallsAndPhysics() {
-  lightSpecular(255,255,255);
+  lightSpecular(255,255,255); 
   directionalLight(204, 204, 204, 0, +1, -1);
   translate(0,0,-2);    // optional, just to show the box border
   boxDraw();
   theBalls.draw();
-  if (!forceFreeze)  
+  if (!forceFreeze )  
     theBalls.game_physics();
   if(drawVector){
     vd = new VectorDrawer();
     vd.draw(theBalls);
   }
-  if(makeEffet){
+  if(makeEffet&& !forceFreeze){
     effet = new Effet(theBalls);
     effet.draw();
   }
@@ -150,9 +145,6 @@ void keyPressed()
   case 'h':
     showModes = !showModes;
     break;
-  case 'q':
-    addBall();
-    break;
   case 'x':
    toggleAlgorithm();
    break;
@@ -196,14 +188,37 @@ void toggleAlgorithm(){
 }
 
 void addBall(){
-  if(currentMode != Mode.TUNNELING){
+  if(currentMode != Mode.TUNNELING && currentMode != Mode.IMPULSE ){
     Ball ball = new Ball(0, true);
     theBalls.add(ball);
     totalball++;
   }
 }
+void removeBall(){
+  if(currentMode != Mode.TUNNELING && currentMode != Mode.IMPULSE){
+    if (!theBalls.isEmpty()) {
+      for(Ball ball : theBalls.balls){
+        if(theBalls.isMouseOverBall(ball, mouseX, mouseY)){
+          if (mouseButton == RIGHT) {
+            theBalls.remove(ball);  
+            break; 
+          }
+        }
+      }
+    }
+  }
+}
+
+
 
 void mousePressed(){
+   if (mouseButton == LEFT) { 
+      addBall();
+    } else if (mouseButton == RIGHT) {
+      removeBall();
+    }
+
+
   theBalls.Mouse();
 }
 

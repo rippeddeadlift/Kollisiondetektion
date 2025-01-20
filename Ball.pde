@@ -51,6 +51,7 @@ public class Ball
 
   void draw() {
     if (times >= 0) {
+      updateSphere();
       pushMatrix();
       translate(Sx(), Sy(), 0);
       rotateX(angleX);
@@ -165,9 +166,11 @@ public class Ball
     return (float)sy;
   }
 
-  void updateSphere() {
+void updateSphere() {
     our_sphere = createShape(SPHERE, radius);
     our_sphere.setStroke(false);
-    our_sphere.setTexture(texture);
-  }
+    our_sphere.setTexture(texture); 
+    our_sphere.setFill(color(255, 255, 255));
+}
+
 }
