@@ -22,7 +22,7 @@
 	\section{Einführung}	
 	\subsection{Projektziel}
 	
-Das Ziel dieses WPF-Projekts war es, eine Kollisionsdetektion in einer 3D-Umgebung zu implementieren. Die Objekte sollten eine realistische Reaktion auf Kollisionen mit den Bällen zeigen und dem Benutzer verschiedene Methoden zur Veranschaulichung bieten, um die Kollisionen näher zu betrachten und besser zu verstehen.
+Das Ziel dieses WPF-Projekts war es, eine Kollisionsdetektion in einer 2D-Umgebung zu implementieren. Die Objekte sollten eine realistische Reaktion auf Kollisionen mit den Bällen zeigen und dem Benutzer verschiedene Methoden zur Veranschaulichung bieten, um die Kollisionen näher zu betrachten und besser zu verstehen.
 	
 	\subsection{Überblick}
 	
@@ -249,17 +249,45 @@ Beispiel im Code:
 	
 	
 	\subsection{Quad-Tree}
-	Vorteile gegenüber Bruteforce
+	Der Quad-Tree ist eine Baumdatenstruktur, bei der jeder Knoten genau 4 Kindknoten enthält (Erinnerung an Algorithmik Vorlesung mit Binary Trees). Der Grund warum wir diese Datenstruktur gewählt haben um darauf Kollisionsdetektion anzuwenden ist, dass Quad-Trees eine Unterteilung eines 2D Raums auf 4 Quadranten möglich macht. Rekursiv verkleinert sich bei Bedarf dadurch die Fläche zum Suchen von möglichen Kollisionen.
+	\begin{figure}[H]
+		\centering 
+		\includegraphics[width=0.8\textwidth]{quadtree.png}  
+		\caption{Quad-Tree  \cite{quadtree_example}} 
+		\label{Bild: Beispiel Quadtree}  
+	\end{figure}
+	Die Laufzeiten für den Quad-Tree sind für das Einfügen O(log(n)) \cite{quadtree_source}~ \\, da der Baum bei jeder Teilung um einen konstanten Faktor kleiner wird. Da wir n Elemente einfügen ist die Gesamtlaufzeit für das Einfügen in unserem Projekt damit O(n*log(n)). 
+	Bei der Kollisionsdetektion müssen nur die Knoten durchsucht werden, die sich in der Nähe des zu prüfenden Knoten befinden. Dadurch reduziert sich die Anzahl der Abfragen im Vergleich zum Brute Force Vorgang erheblich.
+	\subsection{Probleme}
+	\begin{itemize}
+		\item
+		Zuerst hatten wir das Problem, dass es uns aufgrund des fehlenden Rasters in Processing schwer fiel das Detektionsverhalten nachzuvollziehen. Es wurden anfangs teilweise Elemente ignoriert und wir wussten nicht warum auf einige Elemente die Detektion angewandt wurde und auf andere nicht.
+	\end{itemize}
+
 	
 	\section{Visualisierungen und Demonstrationen}
+	
 	
 	\subsection{Vektorenrichtungs-Darstellung}
 	
 	Der Effekt kann mit der Taste \texttt{v} ein- und ausgeschaltet werden.  
 	Hier werden Pfeile in Laufrichtung gezeichnet, sodass der Benutzer die Bewegungsrichtung der Bälle leicht nachvollziehen kann.  
+	Wir nehmen die Position und Velocity von jedem Element und berechnen mittels der Velocity die Richtung in der sich das Element bewegen wird. Anschließend zeichnen wir die Gerade und setzen ein Dreieck zum Pfeildarstellung an das Ende der Geraden
 		
 	
 	\subsection{Tunneling-Demonstration}
+	
+	Wir wollten einige Probleme vorstellen, die sich bei der Kollisionsdetektion einschleichen könnten.
+	Da wir in der Vorlesung bereits die Probleme bei der Performance durch viele Elemente bereits behandelt haben, haben wir uns an das Tunneling Problem \cite{tunneling_source} vorgenommen.
+	\newline
+	Im Prinzip ist das Tunneling Problem das Problem wenn sich ein Element zu schnell bewegt und die Framerate zu niedrig ist. Angenommen ein Element bewegt sich auf eine Wand zu, das Element bewegt sich konstante 5 Units / Frame und die Wand ist 3 Units von dem Element entfernt. Im 2. Frame wäre das Element dann 2 Units hinter der Mauer und es wurde keine Kollision erkannt, da sich die beiden Elemente in dem Frame wo die Abfrage nach der Kollision stattfindet nicht berühren.
+	
+	\begin{figure}[H]
+		\centering 
+		\includegraphics[width=0.8\textwidth]{tunneling.jpg}  
+		\caption{Tunneling  \cite{tunneling_example}} 
+		\label{Bild: Beispiel Tunneling}  
+	\end{figure}
 	
 	
 	\subsection{Impuls-Demonstration}
@@ -293,6 +321,14 @@ Dieses Projekt sowie das Tool Processing bieten eine sehr gute Möglichkeit, Phy
 \begin{thebibliography}{7}
 	\bibitem{leifiphysik1}
 	\href{https://www.leifiphysik.de/mechanik/impulserhaltung-und-stoesse/grundwissen/zentraler-elastischer-stoss}{Leifi Physik: Zentraler elastischer Stoß}
+	\bibitem{tunneling_source}
+	\href{https://gdbooks.gitbooks.io/3dcollisions/content/Chapter2/dynamic.html}{gdbooks.gitbooks.io: Dynamic Intersections}
+	\bibitem{tunneling_example}
+	\href{https://gamedev.stackexchange.com/questions/136590/why-arent-game-bullets-implemented-as-if-they-were-real-bullets/136592#136592}{StackExchange: Tunneling Explained}
+	\bibitem{quadtree_source}
+	\href{https://jrtechs.net/data-science/implementing-a-quadtree-in-python}{jrtechs.net Implementing a Quad Tree}
+	\bibitem{quadtree_example}
+	\href{https://opendsa-server.cs.vt.edu/ODSA/Books/CS3/html/PRquadtree.html}{CS3 Data Structures and Algorithms: Darstellung eines Quadtrees}
 	\bibitem{happycoding}
 	\href{https://happycoding.io/tutorials/processing/collision-detection}{Happy Coding: Collision Detection Tutorial}
 	\bibitem{serlo}
