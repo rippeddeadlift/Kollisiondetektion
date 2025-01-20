@@ -18,7 +18,7 @@ class Quadtree {
     //square.setStroke(color(255,0,0));
   }
 
-  void subdivide() { //<>// //<>//
+  void subdivide() {
     float x = position.x;
     float y = position.y;
     float w = width_ / 2;
@@ -36,7 +36,7 @@ class Quadtree {
       return false;
     }
 
-    if (balls.size() < capacity) { //<>// //<>//
+    if (balls.size() < capacity) {
       balls.add(b);
       println("Add to quadtree");
       return true;

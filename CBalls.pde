@@ -37,7 +37,7 @@ void game_physics() {
     //log(n^2) Algorithmus (BF)
     bruteforce();
     //log(nlog(n) Algorithmus (QuadTree))
-    quadTreeDetection();
+    //quadTreeDetection();
   }
   boolean isMouseOverBall(Ball b, float mx, float my) {
     float dx = b.Sx() - mx;
@@ -143,7 +143,6 @@ void game_physics() {
         }
         ball.radius = constrain((float) ball.radius, 0.4f*65, 0.4f*300);
         ball.MASS = constrain((float) ball.MASS, 1, 10);
-        ball.updateSphere();
     }
   }
 }}

@@ -29,9 +29,9 @@ public class TunnelingDemo{
       
     showHint();
       if(collisionDetected){
-        fill(255,127,255);
+        fill(0,255,0);
       }else{
-        fill(255,255,0);
+        fill(255, 255, 0);
       }
       rect(0, height / 2,  width, 50);
       detectCollisionWithRectangle(ball, 0f, float(height/2), float(width), 50f);
