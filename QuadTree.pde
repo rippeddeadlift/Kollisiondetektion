@@ -6,6 +6,7 @@ class Quadtree {
   float width_, height_;
   Quadtree[] children;
   PShape square;
+  boolean showGrid = false;
 
   Quadtree(float x, float y, float w, float h, int n) {
     position = new PVector(x, y);
@@ -40,28 +41,28 @@ class Quadtree {
     }
   }
   
-  private int getIndex(Ball b){
-    int index = -1;
-    float verticalMid = position.x + this.width_ / 2;
-    float horizontalMid = position.y + this.height_ / 2;
-    boolean topQuadrant = b.Sy() < horizontalMid && b.Sy() + b.Radius() * 2 < horizontalMid;
-    boolean bottomQuadrant = b.Sy() < horizontalMid;
-    
-    if(b.Sx() < verticalMid && b.Sx() + b.Radius() * 2 < verticalMid){
-      if(topQuadrant){
-        index = 1; // in northwest tree
-      }else if(bottomQuadrant){
-        index = 2; // in southwest tree
-      }
-    }else if(b.Sx() > verticalMid){
-      if(topQuadrant){
-        index = 0; // in northeast tree
-      }else if(bottomQuadrant){ 
-        index = 3; // in southeast tree
-      }
+  private int getIndex(Ball b) {
+  int index = -1;
+  float verticalMid = position.x + this.width_ / 2;
+  float horizontalMid = position.y + this.height_ / 2;
+  boolean topQuadrant = b.Sy() < horizontalMid && b.Sy() + b.Radius() * 2 < horizontalMid;
+  boolean bottomQuadrant = b.Sy() >= horizontalMid;
+
+  if (b.Sx() < verticalMid && b.Sx() + b.Radius() * 2 < verticalMid) {
+    if (topQuadrant) {
+      index = 1; // in northwest tree
+    } else if (bottomQuadrant) {
+      index = 2; // in southwest tree
     }
-    return index;
+  } else if (b.Sx() >= verticalMid) {
+    if (topQuadrant) {
+      index = 0; // in northeast tree
+    } else if (bottomQuadrant) {
+      index = 3; // in southeast tree
+    }
   }
+  return index;
+}
   
   public void insert(Ball b){
     if(children[0] != null){
@@ -100,15 +101,14 @@ class Quadtree {
 
 
   void show() {
-    stroke(color(255,255,0));
-    noFill();
-    //shape(square,position.x,position.y);
-    rect(position.x, position.y, width_, height_);
-    if (divided) {
-      children[0].show();
-      children[1].show();
-      children[2].show();
-      children[3].show();
+      stroke(color(255,255,0));
+      noFill();
+      rect(position.x, position.y, width_, height_);
+      if (divided) {
+        children[0].show();
+        children[1].show();
+        children[2].show();
+        children[3].show();
+      }
     }
-  }
 }
