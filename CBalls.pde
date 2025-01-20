@@ -13,7 +13,7 @@ public class CBalls {
   ArrayList<Ball> balls = new ArrayList();
 
   CBalls(int totalball) {
-    qtree = new Quadtree(0, 0, width, height, 4);
+    qtree = new Quadtree(0, 0, width, height, 4, 0, "root");
     for (int bn=0; bn < totalball; bn++) {
        Ball ball = new Ball(0);
        balls.add(ball);
@@ -24,10 +24,13 @@ public class CBalls {
 
   void draw() 
   {
-    qtree = new Quadtree(0, 0, width, height, 4);
+    qtree = new Quadtree(0, 0, width, height, 4, 0 , "root");
+    for(Ball ball : balls){
+      ball.draw();
+    }
+    qtree.clear();
     for(Ball ball : balls){
       qtree.insert(ball);
-      ball.draw();
     }
     if(useQuadTree) qtree.show();
     text("BF Checks: " + bruteForceChecks, 50, 600 + 2 * 25 );
@@ -43,7 +46,7 @@ void game_physics() {
     //log(n^2) Algorithmus (BF)
     bruteforce();
     //log(nlog(n) Algorithmus (QuadTree))
-    //quadTreeDetection();
+    quadTreeDetection();
   }
 
   void Mouse() {
@@ -94,13 +97,17 @@ void game_physics() {
   }
   
   void quadTreeDetection(){
+    ArrayList<Ball> list = new ArrayList();
     for(int i = 0; i < balls.size(); i++){
       Ball b1 = balls.get(i);
-      ArrayList<Ball> otherBalls = qtree.query(new PVector(b1.Sx(), b1.Sy()), b1.Radius() * 2, b1.Radius() * 2);
-      for(int j = 0; j < otherBalls.size(); j++){
+      list.clear();
+      qtree.retrieve(list, balls.get(i));
+      for(Ball ball : list){
+        //if(useQuadTree) cd.draw(b1,ball);
+      }
+      for(int j = 0; j < list.size(); j++){
         quadTreeChecks++;
-        Ball b2 = otherBalls.get(j);
-        if(useQuadTree) cd.draw(b1,b2);
+        Ball b2 = list.get(j);
         float dx = (b1.Sx() - b2.Sx());
         float dy = (b1.Sy() - b2.Sy());
         float distance =  dist(b1.Sx(), b1.Sy(), b2.Sx(), b2.Sy());
@@ -108,6 +115,13 @@ void game_physics() {
             collisionanswer(distance, b1, b2, dx, dy);
         }
       }
+    }
+  }
+  
+  void freezeMovement(){
+    for(Ball b : balls){
+      b.vx = 0;
+      b.vy = 0;
     }
   }
   
