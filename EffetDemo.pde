@@ -10,7 +10,7 @@ public class EffetDemo implements DemoInterface {
   PVector basketPosition = new PVector(500, 450);
   int basketWidth = 100;
   int basketHeight = 150;
-  boolean paused = false; // Flag to control pausing
+  boolean paused = false; 
 
   PVector circlePosition;
   float circleRadius;
@@ -40,7 +40,7 @@ public class EffetDemo implements DemoInterface {
       velocity.add(wind);
       position.add(velocity);
     
-      float angularVelocityX = velocity.x / ball.radius * ball.spinFactor * 100; //*10 um die drehung stärker zu demonstrieren
+      float angularVelocityX = velocity.x / ball.radius * ball.spinFactor * 100; //*100 um die drehung stärker zu demonstrieren
       float angularVelocityY = velocity.y / ball.radius * ball.spinFactor * 100; 
       
       ball.angleX += angularVelocityX;
@@ -54,12 +54,12 @@ public class EffetDemo implements DemoInterface {
       ellipse(circlePosition.x, circlePosition.y, circleRadius * 2, circleRadius * 2);
       
       if (isBallInsideCircle()) {
-        paused = true; // Pause the main window
+        paused = true; 
       }
       if (ball.sx < 0 || ball.sx > width || ball.sy < 0 || ball.sy > height) {
         resetBall();
         inputWindow.openWindow();
-        paused = true; // Pause the main window
+        paused = true; 
       }
     }
   }
@@ -78,14 +78,10 @@ public class EffetDemo implements DemoInterface {
 
   void updateSpinFactor(float newSpinFactor) {
     ball.spinFactor = newSpinFactor/100;
-    paused = false; // Resume the main window
+    paused = false; 
   }
 
   void generateCircle() {
-    float minX = 350;
-    float maxX = 700;
-    float minY = 0;
-    float maxY = height;
     circlePosition = new PVector(random(350,700), random(100,600));
     circleRadius = ball.radius + 20;
   }
