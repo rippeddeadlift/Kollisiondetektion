@@ -16,9 +16,10 @@ public class Ball
   PShape our_sphere;
   PImage texture = loadImage("earth.png");
   boolean mousedown   = false;
+  float spinFactor = 0;
 
   Ball (int count) {
-    this.radius=0.4f*70;
+    this.radius=0.4f*50;
     this.bn=count;
     // we initialize with increasingly more negative 'times'
     // >> the balls pop up one after another:

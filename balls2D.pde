@@ -1,7 +1,7 @@
 CBalls theBalls;
 VectorDrawer vd;
 TextDrawer td;
-int totalball = 0;               // number of balls  
+int totalball = 10;               // number of balls  
 PFont mono; 
 Effet effet;
 boolean showHelp=false;          // toggle help text
@@ -14,6 +14,7 @@ boolean makeEffet = false;
 
 //modes
 TunnelingDemo tunnelingDemo = new TunnelingDemo();
+EffetDemo effetDemo = new EffetDemo();
 Mode currentMode = Mode.NOCOLLISION;
 PGraphics pg; 
 
@@ -42,11 +43,11 @@ void draw()
     background(80);  // gray background 
     if(showModes) background(pg);
     td.displayCurrentFps();
-    td.displayAmountOfElements(totalball);
+    td.displayAmountOfElements(theBalls.balls.size());
     startDrawingBallsAndPhysics();
     switch(currentMode){
       case TUNNELING:
-        tunnelingDemo.draw();
+        tunnelingDemo.display();
         break;
       case NOCOLLISION:
         break;
@@ -59,6 +60,9 @@ void draw()
         theBalls.impulsMasse = true;
         td.displayImpulseHintText();
         break;  
+      case EFFET:
+       effetDemo.display();
+       break;
     }
 }
 void startDrawingBallsAndPhysics() {
@@ -109,6 +113,9 @@ void keyPressed()
   case '4':
     activateMode(Mode.TUNNELING);
     break;
+  case '5':
+    activateMode(Mode.EFFET);
+    break;
   case 'v':
       drawVector = !drawVector;
       break;
@@ -155,21 +162,19 @@ void activateMode(Mode mode) {
   theBalls.impulsMasse = false;
   theBalls.bruteForceChecks = 0;
   theBalls.quadTreeChecks = 0;
+  theBalls = new CBalls(totalball);
   switch(mode){
     case NOCOLLISION:
       currentMode = Mode.NOCOLLISION;
       theBalls.displayAlgorithmicChecks = false;
-      frameRate(50);
       break;
     case COLLISION:
       theBalls.displayAlgorithmicChecks = true;
       currentMode = Mode.COLLISION;
-      frameRate(50);
       break;
     case IMPULSE:
       currentMode = Mode.IMPULSE;
       theBalls.displayAlgorithmicChecks = false;
-      frameRate(50);
       break;
     case TUNNELING:
       currentMode = Mode.TUNNELING;
@@ -177,7 +182,15 @@ void activateMode(Mode mode) {
       theBalls = new CBalls(1);
       tunnelingDemo.init(theBalls);
       break;
-}}
+    case EFFET:
+      currentMode = Mode.EFFET;
+      theBalls.displayAlgorithmicChecks = false;
+      theBalls = new CBalls(1);
+      effetDemo.init(theBalls);
+      break;
+      }
+    frameRate(50);
+  }
 
 void toggleAlgorithm(){
   theBalls.useQuadTree = !theBalls.useQuadTree;
@@ -187,14 +200,14 @@ void toggleDisplayConnections(){
 }
 
 void addBall(){
-  if(currentMode != Mode.TUNNELING && currentMode != Mode.IMPULSE ){
+  if(currentMode != Mode.TUNNELING && currentMode != Mode.IMPULSE && currentMode != Mode.EFFET){
     Ball ball = new Ball(0, true);
     theBalls.add(ball);
     totalball++;
   }
 }
 void removeBall(){
-  if(currentMode != Mode.TUNNELING && currentMode != Mode.IMPULSE){
+  if(currentMode != Mode.TUNNELING && currentMode != Mode.IMPULSE && currentMode != Mode.EFFET){
     if (!theBalls.isEmpty()) {
       for(Ball ball : theBalls.balls){
         if(theBalls.isMouseOverBall(ball, mouseX, mouseY)){
