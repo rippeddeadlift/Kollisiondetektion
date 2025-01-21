@@ -16,7 +16,6 @@ public class TunnelingDemo implements DemoInterface{
     ball.vx = 0;
     ball.sx = width/2;
     ball.sy = 0;
-    frameRate(50);
     ball.updateSphere();
     display();
   }

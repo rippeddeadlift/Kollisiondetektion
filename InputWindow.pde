@@ -15,7 +15,7 @@ public class InputWindow extends PApplet {
     background(200);
       fill(0);
       text("Spinfaktor einsetzen", 10, 50);
-      text(userInput, 10, 90);
+      text("Deine Eingabe: " + userInput, 10, 90);
   }
 
   public void draw() {
@@ -25,7 +25,7 @@ public class InputWindow extends PApplet {
       text("Nicht getroffen",10,30);
       text("Probier es mit einem anderen SpinFaktor", 10, 50);
       text("Der letzte SpinFaktor war " + effetDemo.ball.spinFactor*100, 10, 70);
-      text(userInput, 10, 90);
+      text("Deine Eingabe: " + userInput, 10, 90);
     }
   }
 
