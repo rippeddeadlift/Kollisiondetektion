@@ -1,4 +1,4 @@
-public class TunnelingDemo{
+public class TunnelingDemo implements DemoInterface{
   TextDrawer td;
   CBalls ballContainer;
   Ball ball;
@@ -18,15 +18,13 @@ public class TunnelingDemo{
     ball.sy = 0;
     frameRate(50);
     ball.updateSphere();
-    draw();
+    display();
   }
-  void draw(){
+  void display(){
     if(active){
       showHint();
       if(collisionDetected){
-        fill(0,255,0);
-      }else{
-        fill(255, 255, 0);
+        text("KOLLISION ERKANNT", width/2-25, height/2+25);
       }
       rect(0, height / 2,  width, 50);
       detectCollisionWithRectangle(ball, 0f, float(height/2), float(width), 50f);
