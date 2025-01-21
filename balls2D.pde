@@ -1,7 +1,7 @@
 CBalls theBalls;
 VectorDrawer vd;
 TextDrawer td;
-int totalball = 2;               // number of balls  
+int totalball = 0;               // number of balls  
 PFont mono; 
 Effet effet;
 boolean showHelp=false;          // toggle help text
@@ -200,6 +200,7 @@ void removeBall(){
         if(theBalls.isMouseOverBall(ball, mouseX, mouseY)){
           if (mouseButton == RIGHT) {
             theBalls.remove(ball);  
+            totalball--;
             break; 
           }
         }
