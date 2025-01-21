@@ -16,6 +16,7 @@ class TextDrawer{
     pg.text("2: Kollisiondetektion", 10, 35 + 1 * 25);
     pg.text("3: Impuls Demonstration", 10, 35 + 2 * 25);
     pg.text("4: Tunneling Demonstration", 10, 35 + 3 * 25);
+    pg.text("5: Effet / Magnus Force Demonstration", 10, 35 + 4 * 25);
     pg.text("e: Drehung",mid_x,35);
     pg.text("v: Bewegungsvektoren anzeigen",mid_x,35+1*25);
     pg.text("x: Algorithmus Toggle",mid_x,35+2*25);
