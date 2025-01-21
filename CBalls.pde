@@ -34,7 +34,7 @@ public class CBalls {
     for(Ball ball : balls){
       qtree.insert(ball);
     }
-    if(qtree.showGrid) qtree.show();
+    if(qtree.showGrid && useQuadTree) qtree.show();
     if(displayAlgorithmicChecks){
       text("BF Checks: " + bruteForceChecks, width/2, 600 + 2 * 25 );
       text("QT Checks: " + quadTreeChecks, width/2, 600 + 3 * 25 );
