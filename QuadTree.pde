@@ -45,16 +45,16 @@ class Quadtree {
   int index = -1;
   float verticalMid = position.x + this.width_ / 2;
   float horizontalMid = position.y + this.height_ / 2;
-  boolean topQuadrant = b.Sy() < horizontalMid && b.Sy() + b.Radius() * 2 < horizontalMid;
-  boolean bottomQuadrant = b.Sy() >= horizontalMid;
+  boolean topQuadrant = b.Sy() < horizontalMid && b.Sy() + b.Radius() < horizontalMid;
+  boolean bottomQuadrant = b.Sy() > horizontalMid && b.Sy() - b.Radius() > horizontalMid;;
 
-  if (b.Sx() < verticalMid && b.Sx() + b.Radius() * 2 < verticalMid) {
+  if (b.Sx() < verticalMid && b.Sx() + b.Radius() < verticalMid) {
     if (topQuadrant) {
       index = 1; // in northwest tree
     } else if (bottomQuadrant) {
       index = 2; // in southwest tree
     }
-  } else if (b.Sx() >= verticalMid) {
+  } else if (b.Sx() > verticalMid && b.Sx() - b.Radius() > verticalMid) {
     if (topQuadrant) {
       index = 0; // in northeast tree
     } else if (bottomQuadrant) {
